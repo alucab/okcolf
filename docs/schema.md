@@ -1,5 +1,15 @@
 # Tabelle
 
+## Datore di Lavoro
+{
+  id: "datore_001",
+  nome: "Luca Barba",
+  codiceFiscale: "BRBLCA...",
+  indirizzo: "Via Roma 1",
+  email: "luca@example.com"
+}
+
+
 ## Collaboratore
 {
   id: "colf_001",
@@ -15,26 +25,33 @@
   oreSettimanali: 20
 }
 
-## Ore Lavorate
+## Contratto
 {
   id: "ore_2025_09_27",
+  datoreId : "datore_001"
   colfId: "colf_001",
-  data: "2025-09-27",
-  ore: 3,
-  ferie: false
+  dataInizio: "2025-09-27",
+  dataFine: "2025-09-29",
+  retribuzioneLorda: "8.5"
+  livelloContratto:"B"
+  commenti:""
 }
-
-## Busta Paga
+## Contributi
 {
-  id: "busta_2025_09",
-  colfId: "colf_001",
-  mese: "2025-09",
-  oreTotali: 80,
-  lordo: 840.00,
-  inps: 116.00,
-  irpef: 84.00,
-  netto: 640.00,
-  pdfPath: "/pdfs/busta_2025_09.pdf"
+  id:""
+  anno:2025
+  periodo:1
+  inizio:"2025-01-01",
+  fine:"2025-03-31",
+  settimane_lavorate:5,
+  numero_ore: 234
+  ammontare dovuto : 436
+  full_period:false
+  scadenza:"2025-04-10"
+  pagato : true
+  pagatoWhen : "2025-09-29",
+  pagatoClick : "2025-09-29"
+  
 }
 
 ## CUA
@@ -45,14 +62,6 @@
   oreTotali: 960,
   retribuzioneTotale: 10080.00,
   contributiTotali: 1392.00,
-  pdfPath: "/pdfs/cua_2025.pdf"
 }
 
-## Datore di Lavoro
-{
-  id: "datore_001",
-  nome: "Luca Barba",
-  codiceFiscale: "BRBLCA...",
-  indirizzo: "Via Roma 1",
-  email: "luca@example.com"
-}
+
