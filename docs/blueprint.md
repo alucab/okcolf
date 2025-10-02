@@ -1,8 +1,6 @@
 # Problema
 Le famiglie italiane che impiegano collaboratori domestici a ore (colf, babysitter, ecc.) affrontano difficoltà nella gestione amministrativa: assunzione, tracciamento ore, calcolo buste paga, contributi INPS e obblighi fiscali come la Comunicazione Unica Annuale (CUA). Le soluzioni esistenti sono complesse, costose e non mobile-first.
 
-
-
 # Approccio Strategico
 Realizzare una Progressive Web App (PWA) semplice, economica e conforme alla normativa italiana, con:
 
