@@ -35,16 +35,14 @@ Edge Case: L’utente dimentica di registrare ore per una settimana. L’app lo 
 
 ## Modello di Impatto
 
-- App gratuita
+- Ricavi: 1.000 utenti premium × €9,99 = €9.990/anno
+- Costi: VPS (€120), legale (€2.000), marketing (€2.000)
+- Break-even: ~1.000 utenti premium
 
 # Funzionalità Chiave
 
-## Aspetti tecnici fondamentali
-
+Autenticazione email/password (con salvatggio sessione per accesso continuo)
 Persistenza locale (sql.js salvato periodicamente in indexed db)
-Migrazione automatica dei dati se lo schema cambia
-
-## UC1 – Onboarding rapido collaboratore
 
 - Onboarding e configurazione iniziale
   - Configurazione iniziale di base (esempio: dati della famiglia, IBAN per pagamenti, ecc.).
@@ -56,27 +54,25 @@ Migrazione automatica dei dati se lo schema cambia
     - Netto desiderato
     - Budget massimo datore
     - Classica definizione del lordo
-
-## UC2 – Tracking ore giornaliere / settimanali
-
+  
 - Tracciamento ore settimanali e attività
   - Inserimento automatico o manuale delle ore → Opzione per segnare le ore lavorate giornalmente o settimanalmente.
   - Calcolo automatico degli straordinari e delle maggiorazioni (esempio: lavoro festivo).
   - Notifiche per ricordare di inserire le ore.
   - Gestione ferie e permessi con tracciamento del saldo.
-## UC3 – Schermata simulazione costi
-## UC4 – Export / Backup dati
-## UC5 – Reminder trimestrale simulato
-## UC6 – Suggerisci nuova funzione
+- Variazioni contrattuali e cessazione rapporto
+  - Modifica orario e stipendio con effetto retroattivo o da data specifica.
+  - Wizard per il licenziamento → Calcolo automatico del preavviso e liquidazione finale (TFR, ferie non godute).
+  - Comunicazione automatizzata all'INPS (se possibile via API o generando il modulo precompilato).
 
-# NON OBIETTIVI (FUTURE ROADMAP)
+Documenti
+- Lettera assunzione : Calcolo e Generazione PDF (premium)
+- Busta paga : Calcolo e Generazione PDF (premium)
+- CUA annuale : Calcolo e Generazione PDF (premium)
+- Terminazione : Calcolo e Generazione PDF (premium)
 
-- Documenti
-  - Lettera assunzione : Calcolo e Generazione PDF (premium)
-  - Busta paga : Calcolo e Generazione PDF (premium)
-  - CUA annuale : Calcolo e Generazione PDF (premium)
-  - Terminazione : Calcolo e Generazione PDF (premium)
-- Autenticazione email/password (con salvatggio sessione per accesso continuo)
+# Future
+
 - Variazioni del contratto
 - Gestione multi-colf
 - Notifiche push
@@ -95,20 +91,22 @@ Migrazione automatica dei dati se lo schema cambia
   - Previsione costi → Simulazione degli stipendi e contributi futuri in base a variazioni.
   - Esportazione dati → In PDF o CSV per dichiarazione dei redditi o archiviazione.
   
-- Variazioni contrattuali e cessazione rapporto
-  - Modifica orario e stipendio con effetto retroattivo o da data specifica.
-  - Wizard per il licenziamento → Calcolo automatico del preavviso e liquidazione finale (TFR, ferie non godute).
-  - Comunicazione automatizzata all'INPS (se possibile via API o generando il modulo precompilato).
+# Flussi Utente
+## 🔐 Autenticazione (opzionale)
 
+Registrazione → Verifica email → Login → “Ricordami” → Recupero password
 
-- 
 ## 👤 Profilo Datore
 
 Inserimento dati anagrafici e fiscali → Salvataggio → Modifica
 
-## 🧍‍♀️ AssunzioneInserimento Collaboratore
+## 🧍‍♀️ Assunzione
 
-Inserimento dati → Selezione modalità retribuzione → Scenario → Conferma 
+Inserimento dati → Selezione modalità retribuzione → Scenario → Conferma → Generazione lettera PDF(Premium)
+
+## 🧍‍♀️ Termine/Licenziamento
+
+Inserimento dati → Conferma → Generazione lettera PDF(Premium)
 
 ## 💡 Modalità Retribuzione
 
@@ -116,17 +114,27 @@ Modalità 1: Inserisci netto orario → Calcolo scenario → Conferma
 Modalità 2: Inserisci budget orario → Calcolo scenario → Conferma
 Modalità 3: inserisci il lordo → Calcolo scenario → Conferma 
 
-## 📅 Inserimento Ore
+## 📅 Calendario
 
-Selezione settimana → Inserimento ore → Salvataggio 
+Selezione giorno → Inserimento ore → Salvataggio → Offline sync
 
 ## 💰 Busta Paga
 
-Selezione mese → Calcolo → Visualizzazione 
+Selezione mese → Calcolo → Visualizzazione → PDF (premium)
+
+## 📄 CUA
+
+Aggregazione annuale → Generazione PDF (premium)
 
 ## 📆 Annualità Normativa
 
 Aggiornamento automatico tabelle → Adattamento calcoli → Notifica utente
+
+## 🧭 Onboarding
+
+3–5 schermate tutorial → Opzione “Salta” o “Rivedi più tardi”
+
+## Logout
 
 
 # Logiche Chiave

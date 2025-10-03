@@ -1,97 +1,101 @@
-# MVP Lean – Gestione Comunicazione Unica
+# Use Case – Fase 1 (AI-Friendly)
+
+## UC1 – Onboarding rapido collaboratore
+- **Schermate:** 
+  1. Spiegazione rapida (“Registra le ore del tuo collaboratore in pochi secondi al giorno”)  
+  2. Inserimento collaboratore + ore/retribuzione  
+  3. Riepilogo totale + messaggio soft “Vuoi salvare i dati e ricevere promemoria? → email opzionale”
+- **Attori:** Utente, App, Sistema Email (opzionale)
+- **Input:** Nome collaboratore, ore lavorate, retribuzione
+- **Output:** Totale mensile stimato, riepilogo dati inseriti
+- **Trigger/Ganci:** Export CSV → acquisizione contatto email opzionale, Reminder trimestrale simulato
+- **Precondizioni:** App aperta, connessione internet opzionale per export
+- **Postcondizioni:** Dati visibili offline, export possibile con email
+- **Obiettivo strategico:** Fidelizzazione iniziale, raccolta contatto
+- **Priorità MVP:** Alta
+- **Analytics:** % utenti completamento onboarding, numero collaboratori inseriti, prima interazione con export/reminder
 
 ---
 
-## 🟢 Caso 0 – Download e Registrazione
-**Obiettivo:**  
-Scaricare l’app, registrarsi e avere 
-Per l'app raccogliere le email e costruire contatti devono fare opt-in al mailing per avere accesso
-
-**Schermate principali:**
-1. App Store Listing – Titolo, descrizione, screenshot
-2. Permessi – Location, notifiche, storage
-3. Opzioni registrazione – Apple, Google, Email
-4. Form registrazione – Email, password, T&C, Privacy, Disclaimer
-5. Verifica email – Magic link o OTP
-6. Schermata di benvenuto – Messaggio di saluto e vantaggi principali
-7. **Sessione persistente** – Auto-login al riavvio dell’app
-
----
-
-## 🟢 Caso 1 – Assunzione Collaboratore/Inserimento Dati
-**Obiettivo:**  
-Inserire i dati del datore di lavoro e del lavoratore
-Bare minimum per generare la CU e i contributi
-Il contratto e' chiaramente a ore, senza convivenza, super semplice
-In questo modello non puoi avere variazioni, in alternativa puoi scegliere di dire quante ore ha lavorato e a quale costo orario.
-
-**Schermate principali:**
-10. Profilo Datore di Lavoro – Nome, Indirizzo, Codice fiscale
-11. Profilo collaboratore – Nome, Indirizzo, Codice fiscale
-12. Gestione Contratto:
-   - Step 1: Tipo contratto – CCNL colf, tempo determinato o indeterminato
-   - Step 2: Ore lavorate – Totale e giorni
-     - Opzione 1 : Struttura settimanale ore e giorni 
-     - Opzione 2 : Numero di ore lavorate nell'anno
-     - Opzione 3 : Lump Sum 
-   - Step 3: Calcolo Retribuzione lorda 
-     - Calcolo Retribuzione lorda : varie opzioni
-     - Contributi INPS – Opzioni predefinite o manuali
-   - Step 4: - Varie opzioni
-13. Riepilogo contratto – Anteprima dei dati inseriti
-14. Schermata successo – Conferma avvenuta
+## UC2 – Tracking ore giornaliere / settimanali
+- **Schermate:** 
+  1. Inserimento ore giornaliere/settimanali  + marcatura giorni ferie e malattia
+  2. Riepilogo totale mensile  
+  3. Notifiche / reminder in-app
+- **Attori:** Utente, App
+- **Input:** Ore giornaliere o settimanali
+- **Output:** Totale mensile aggiornato, avvisi reminder
+- **Trigger/Ganci:** Reminder in-app “Hai X ore da registrare”, Bottone “Simula costo totale”, Bottone “Suggerisci nuova funzione”, Export CSV / backup email
+- **Precondizioni:** Utente ha completato onboarding
+- **Postcondizioni:** Totali aggiornati in app, reminder attivi
+- **Obiettivo strategico:** Retention, engagement quotidiano
+- **Priorità MVP:** Alta
+- **Analytics:** Numero ore inserite, retention settimanale, click su export, simulazione e suggerimenti
 
 ---
 
-## 🟢 Caso 2 – Gestione contributi
-**Obiettivo:**  
-Visualizzare anteprima contributi INPS dovuti nell'anno divisi per quarti
-Il calcolo avviene sino alla data attuale per consentire di gestire situazioni come licenziamento.
-Vedi solo l'anno in corso non anni precedenti
-
-**Schermate principali:**
-31. Riepilogo contributi – Dettaglio INPS, quota datore, quota collaboratore
-32. Conferma e gestione scadenze
-33. Schermata successo
-
----
-
-## 🟢 Caso 3 – Generazione CU (Certificazione Unica)
-**Obiettivo:**  
-Generare la CU annuale per il collaboratore.
-
-**Schermate principali:**
-34. Riepilogo CU – Salario annuale, tasse, contributi
-35. Conferma e genera PDF – Download o invio email
-36. Schermata successo – PDF pronto e notificato
+## UC3 – Schermata simulazione costi
+- **Schermate:** 
+  1. Simulazione costi input ore/retribuzione/tipo collaboratore  
+  2. Tooltip/info dettagliata sui contributi stimati  
+  3. Popup CTA “Ricevi riepilogo via email”  
+  4. Opzione “Salva stima PDF”
+- **Attori:** Utente, App, Sistema Email (opzionale)
+- **Input:** Ore lavorate, retribuzione, tipo collaboratore
+- **Output:** Netto collaboratore, contributi stimati, TFR, tredicesima, costo totale
+- **Trigger/Ganci:** CTA email → micro-email acquisition, Salva PDF → gancio email
+- **Precondizioni:** Dati collaboratore inseriti
+- **Postcondizioni:** Visualizzazione offline possibile, export PDF/email se abilitato
+- **Obiettivo strategico:** Percezione valore immediato + raccolta contatti
+- **Priorità MVP:** Alta
+- **Analytics:** % utenti che aprono simulazione, click CTA email, interazioni tooltip
 
 ---
 
-## 🟢 Caso 4 – Licenziamento/Blocco Rapporto
-**Obiettivo:**  
-Gestire la cessazione del contratto bloccando calcolo contributi e CU
-
-**Schermate principali:**
-16. Wizard licenziamento:
-   - Step 1: Data fine contratto – con alert preavviso
-   - Step 2: Blocco Calcolo Contributi
-   - Step 3: Template Lettera
-17. Riepilogo licenziamento – Anteprima dei dati
-18. Schermata successo – Conferma avvenuta
+## UC4 – Export / Backup dati
+- **Schermate:** 
+  1. Bottone “Esporta CSV/Excel”  
+  2. Popup conferma export / inserimento email
+- **Attori:** Utente, App, Sistema Email
+- **Input:** Richiesta export
+- **Output:** CSV o Excel inviato via email / scaricato
+- **Trigger/Ganci:** Backup cloud → richiede email
+- **Precondizioni:** Dati presenti
+- **Postcondizioni:** Dati salvati offline o cloud
+- **Obiettivo strategico:** Raccolta contatti, fidelizzazione tramite sicurezza dati
+- **Priorità MVP:** Media
+- **Analytics:** % utenti che lasciano email, open/click reminder, conversione export → account Fase 2
 
 ---
 
-## 🟢 Caso 5 – Accesso T&C
-**Obiettivo:**  
-Dare accesso ai documenti ed ai chiarimenti che governano l'app
+## UC5 – Reminder trimestrale simulato
+- **Schermate:** 
+  1. Riepilogo trimestrale contributi stimati  
+  2. Popup CTA “Ricevi promemoria via email”  
+  3. Popup “Vuoi salvare dati sul cloud?”
+- **Attori:** Utente, App, Sistema Email
+- **Input:** Nessuno specifico (dati esistenti)
+- **Output:** Riepilogo trimestrale + CTA email
+- **Trigger/Ganci:** CTA email / salvataggio cloud
+- **Precondizioni:** Utente ha completato almeno un ciclo di inserimento dati
+- **Postcondizioni:** Reminder attivato, possibile ritorno app
+- **Obiettivo strategico:** Engagement post-onboarding, micro-email acquisition
+- **Priorità MVP:** Media
+- **Analytics:** Click CTA, email inserite, ritorno nell’app
 
-
-**Schermate principali:**
-1.  Sezione Informazioni:
-- Privacy 
-- GDPR
-- T&C
-- Manuale e Chiarimenti
 ---
 
-
+## UC6 – Suggerisci nuova funzione
+- **Schermate:** 
+  1. Popup campo testo libero descrizione feature  
+  2. Checkbox “Posso contattarti via email”  
+  3. Messaggio ringraziamento post-invio
+- **Attori:** Utente, App, Sistema Email (opzionale)
+- **Input:** Descrizione feature, checkbox consenso email
+- **Output:** Insight qualitativi raccolti, eventuale email acquisita
+- **Trigger/Ganci:** Bottone discreto in app
+- **Precondizioni:** App aperta, utente loggato o anonimo
+- **Postcondizioni:** Suggerimento registrato, eventuale contatto email acquisito
+- **Obiettivo strategico:** Insight qualitativi, micro-email acquisition, engagement
+- **Priorità MVP:** Bassa
+- **Analytics:** Numero suggerimenti, % email, trend feature

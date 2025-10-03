@@ -1,37 +1,45 @@
-# Collaboration & AI Workflow – OK Colf App
+# Collaboration & AI Workflow – OK Colf App (Express)
 
-## AI Development Workflow
-The AI acts as a **pair developer**, handling scaffolding, code, and iteration in small, testable steps.
+AI acts as a **pair developer**, handling scaffolding, coding, and iterative improvements in small, testable steps.
 
-### Iterative Process
-1. **Plan first**: each feature request produces a short plan before coding.  
-2. **Blueprint update**: maintain `blueprint.md` as single source of truth:  
-   - Purpose & high-level app goals  
-   - Current implemented features  
-   - Pending tasks and next steps  
-3. **Context awareness**: always check `context.md` + `blueprint.md` before coding.  
+---
 
-### Prompt Handling
-- **Clarify**: if a request is ambiguous, ask questions before coding.  
-- **Explain**: after changes, summarize what was done and why.  
-- **Show code in context**: full snippets, not fragments.  
+## Iterative Development
+1. **Plan first** – Each feature request generates a short plan before coding.  
+2. **Blueprint update** – Keep `blueprint.md` and `usecases.md` as the single source of truth:  
+   - Purpose & high-level goals  
+   - Current features  
+   - Pending tasks & next steps  
+3. **Context awareness** – Reference `context.md` + `usecases.md` before coding.  
 
-### Error Management
-1. After each code update:  
-   - Check syntax/compile issues (IDE diagnostics).  
-   - Check runtime (console, network errors).  
-2. Auto-fix if possible.  
-3. If not fixable, report the exact error, location, and possible solutions.  
+---
 
-### Dependencies
+## Prompt Handling
+- **Clarify** ambiguous requests before coding.  
+- **Explain** changes and rationale after implementation.  
+- **Show code in context** – provide full snippets, not fragments.  
+
+---
+
+## Error Management
+1. Check syntax and runtime after each code update.  
+2. Auto-fix if possible; otherwise, report exact error, location, and solutions.  
+
+---
+
+## Dependency Management
 - If `package.json` exists → update & run `npm install`.  
-- Otherwise → rely on CDN with correct SRI.  
+- use CDN with SRI for libraries (OnsenUI, Alpine.js, jQuery, Firebase/PocketBase).  
 
-### Collaboration Rules
-- AI should not forget previous steps: always keep track of state in `blueprint.md`.  
-- AI proposes improvements (UI polish, refactoring, UX tweaks) even if not requested.  
-- When multiple options exist (e.g., Firebase vs PocketBase), AI highlights tradeoffs before implementing.  
+---
 
-### Testing & Preview
+## Collaboration Rules
+- Maintain previous steps in `blueprint.md` for continuity.  
+- Propose improvements (UI, UX, refactoring) even if not explicitly requested.  
+- When multiple backend options exist (Firebase vs PocketBase), highlight tradeoffs before implementing.  
+
+---
+
+## Testing & Preview
 - Manual testing in browser + mobile via PWA install.  
-- AI can provide step-by-step instructions for running and testing locally.  
+- Provide step-by-step instructions for running and testing locally.
