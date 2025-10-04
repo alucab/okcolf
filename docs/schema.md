@@ -14,7 +14,7 @@
 - this is a structure that is part of the application not the db
 - it gives year by year and threshold by threshold the amount due per hour and the the start/end date of the social security payments
 
-year:{
+year:
   amounts : 
     paid_hour_threshold
       number_of_hours_threshold

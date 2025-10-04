@@ -1,16 +1,4 @@
-// App logic.
-window.myApp = {};
 
-document.addEventListener('init', function(event) {
-  var page = event.target;
-
-  // Each page calls its own initialization controller.
-
-
-  // Fill the lists with initial data when the pages we need are ready.
-  // This only happens once at the beginning of the app.
-
-});
 
 async function addSampleWorker() {
   const id = await db.workers.add({
@@ -25,9 +13,27 @@ async function addSampleWorker() {
   await triggerSync();
 }
 
+async function deleteWorkers(){
+  await db.workers.clear();
+  await addLog('data', 'Tutti i workers eliminati');
+  await triggerSync();
+}
+
 async function listWorkers() {
   const workers = await db.workers.toArray();
-  document.getElementById('workers-list').textContent = JSON.stringify(workers, null, 2);
+  if (workers.length === 0) {
+    document.getElementById('workers-list').textContent = 'Nessun worker trovato.';
+    await addLog('data', 'Nessun worker trovato');
+  } else if (workers.length < 10) {
+     await addLog('data', 'Workers trovati: ' + workers.length);
+     document.getElementById('workers-list').textContent = JSON.stringify(workers, null, 2);
+  } else {
+    document.getElementById('workers-list').textContent = 'Troppi workers per essere mostrati (' + workers.length + ').';
+    await deleteWorkers();
+  }
+
+   return;
+  
 }
 
 addSampleWorker();

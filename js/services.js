@@ -2,7 +2,7 @@
  * App Services. This contains the logic of the application organised in modules/objects. *
  ***********************************************************************************/
 
-myApp.services = {
+window.myApp.services = {
 
   /////////////////
   // Task Service //

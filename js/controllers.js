@@ -2,7 +2,7 @@
  * App Controllers. These controllers will be called on page initialization. *
  ***********************************************************************/
 
-myApp.controllers = {
+window.myApp.controllers = {
 
   //////////////////////////
   // Tabbar Page Controller //
