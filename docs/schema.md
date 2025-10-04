@@ -1,16 +1,48 @@
 # COLF App Database Schema
 
-## 1. Instructions and Notes for sql.js
-- The database is designed for use with **sql.js** (SQLite compiled to WebAssembly/JavaScript).  
-- All `INTEGER PRIMARY KEY` fields are **auto-incremented** by SQLite.  
-- `FOREIGN KEY` constraints are included for clarity but **sql.js does not enforce them by default** unless explicitly enabled.  
+## 0. Instructions and Notes
+- The database is designed for use with **dexie.js**   
 - Use **ISO 8601 strings** (`YYYY-MM-DD`) for storing dates.  
 - Use `TEXT` for fields that may vary in format (e.g., phone numbers, addresses).  
 - Contractors (workers) can have **multiple contracts** with the same employer, to represent changes in working hours or salary over time.  
 
 ---
+## 1. Data structure to configure the application
 
-## 2. Schema Description (JSON-like format)
+### 1.1 Social security payments configuration
+
+- this is a structure that is part of the application not the db
+- it gives year by year and threshold by threshold the amount due per hour and the the start/end date of the social security payments
+
+year:{
+  amounts : 
+    paid_hour_threshold
+      number_of_hours_threshold
+        amount_due_per_hour
+  quarters :
+    quarter_number, start, end, deadline
+}
+
+```json
+{
+  "social_security_payments":{
+    "id": "INTEGER, primary key",
+    "contract_id": "INTEGER, foreign key → contracts.id",  
+    "start_date": "TEXT, quarter start date",
+    "end_date": "TEXT, quarter end date (nullable if active)",
+    "quarter" :  "INTEGER",
+    "year" :  "INTEGER",
+    "number_of_weeks" : "INTEGER",
+    "number_of_hours" : "INTEGER",
+    "paid" : "BOOLEAN",
+    "payment_date": "TEXT, contract start date",
+  }
+}
+```
+
+---
+
+## 2. Data Schema Description (JSON-like format)
 
 ```json
 {
@@ -20,7 +52,8 @@
     "last_name": "TEXT, worker’s last name",
     "date_of_birth": "TEXT, date in YYYY-MM-DD format",
     "phone": "TEXT, contact phone",
-    "email": "TEXT, optional email"
+    "email": "TEXT, optional email",
+    "tax_code": "TEXT,compulsory"
   },
   "employers": {
     "id": "INTEGER, primary key",
@@ -33,6 +66,7 @@
     "id": "INTEGER, primary key",
     "worker_id": "INTEGER, foreign key → workers.id",
     "employer_id": "INTEGER, foreign key → employers.id",
+    "contract_no": "TEXT,optional",
     "start_date": "TEXT, contract start date",
     "end_date": "TEXT, contract end date (nullable if active)",
     "hours_per_week": "INTEGER, contracted hours per week",
@@ -51,56 +85,18 @@
     "date": "TEXT, payment date",
     "amount": "REAL, payment amount",
     "method": "TEXT, e.g., cash, bank transfer"
+  },
+  "social_security_payments":{
+    "id": "INTEGER, primary key",
+    "contract_id": "INTEGER, foreign key → contracts.id",  
+    "start_date": "TEXT, quarter start date",
+    "end_date": "TEXT, quarter end date (nullable if active)",
+    "quarter" :  "INTEGER",
+    "year" :  "INTEGER",
+    "number_of_weeks" : "INTEGER",
+    "number_of_hours" : "INTEGER",
+    "paid" : "BOOLEAN",
+    "payment_date": "TEXT, contract start date",
   }
 }
-```
----
-## 2. SQL Script
-```SQL
-CREATE TABLE workers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
-    date_of_birth TEXT,
-    phone TEXT,
-    email TEXT
-);
-
-CREATE TABLE employers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    phone TEXT,
-    email TEXT,
-    address TEXT
-);
-
-CREATE TABLE contracts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    worker_id INTEGER NOT NULL,
-    employer_id INTEGER NOT NULL,
-    start_date TEXT NOT NULL,
-    end_date TEXT,
-    hours_per_week INTEGER,
-    hourly_wage REAL,
-    FOREIGN KEY (worker_id) REFERENCES workers (id),
-    FOREIGN KEY (employer_id) REFERENCES employers (id)
-);
-
-CREATE TABLE work_sessions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    contract_id INTEGER NOT NULL,
-    date TEXT NOT NULL,
-    hours_worked REAL NOT NULL,
-    notes TEXT,
-    FOREIGN KEY (contract_id) REFERENCES contracts (id)
-);
-
-CREATE TABLE payments (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    contract_id INTEGER NOT NULL,
-    date TEXT NOT NULL,
-    amount REAL NOT NULL,
-    method TEXT,
-    FOREIGN KEY (contract_id) REFERENCES contracts (id)
-);
 ```

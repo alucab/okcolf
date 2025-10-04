@@ -42,7 +42,7 @@ Edge Case: L’utente dimentica di registrare ore per una settimana. L’app lo 
 ## Aspetti tecnici fondamentali
 
 Persistenza locale (sql.js salvato periodicamente in indexed db)
-Migrazione automatica dei dati se lo schema cambia
+Migrazione automatica dei dati se lo schema cambia o se c'e' un update del SW
 
 ## UC1 – Onboarding rapido collaboratore
 
@@ -69,7 +69,83 @@ Migrazione automatica dei dati se lo schema cambia
 ## UC5 – Reminder trimestrale simulato
 ## UC6 – Suggerisci nuova funzione
 
-# NON OBIETTIVI (FUTURE ROADMAP)
+# Flussi utente
+
+- 
+## 👤 Profilo Datore
+
+Inserimento dati anagrafici e fiscali → Salvataggio → Modifica
+
+## 🧍‍♀️ Assunzione/Inserimento Collaboratore
+
+Inserimento dati → Selezione modalità retribuzione → Scenario → Conferma 
+Cambio Retribuzione → Selezione modalità retribuzione → Scenario → Conferma 
+
+## 💡 Modalità Retribuzione
+
+Modalità 1: Inserisci netto orario → Calcolo scenario → Conferma
+Modalità 2: Inserisci budget orario → Calcolo scenario → Conferma
+Modalità 3: inserisci il lordo → Calcolo scenario → Conferma 
+
+## 📅 Inserimento Ore
+
+Selezione settimana → Inserimento ore → Salvataggio 
+
+## 💰 Busta Paga
+
+Selezione mese → Calcolo → Visualizzazione 
+
+## 📆 Annualità Normativa
+
+Aggiornamento automatico tabelle → Adattamento calcoli → Notifica utente
+
+
+# Logiche Chiave
+
+Calcolo busta paga: lordo, INPS, IRPEF, netto
+Modalità retribuzione: input semplificato → scenario riepilogativo
+Annualità: database tabelle normative aggiornabili per ogni anno
+
+# Mappa di Navigazione
+🏠 Home
+  └─ (Day 0) Accesso rapido datore
+  └─ (Day 0) Accesso rapido collaboratore
+  └─ (Day N) Accesso rapido Busta Paga
+  └─ (Day N) Accesso rapido a inserimento ore
+  └─ (EoQ) Accesso rapido a Contributi
+
+Menu Laterale
+  └─👤 Profilo Datore
+    └─ Dati anagrafici
+    └─ Dati fiscali
+  └─🧍 Collaboratore
+    └─ Inserimento dati
+    └─ Modalità retribuzione
+        └─ Netto desiderato
+        └─ Budget massimo
+
+  └─📅 Calendario
+    └─ Inserimento ore settimanale
+    └─ Ferie
+
+  └─💰 Busta Paga
+    └─ Selezione mese
+    └─ Calcolo
+
+  └─💰 Contributi
+    └─ Selezione quarto
+    └─ Calcolo
+
+  └─⚙️ Impostazioni
+    └─ Privacy
+    └─ Reset dati
+    └─ Suggerisci una feature
+
+  Bottom Buttons
+  └─🏠 Home
+  └─📅 Inserimento Ore
+
+  # NON OBIETTIVI (FUTURE ROADMAP)
 
 - Documenti
   - Lettera assunzione : Calcolo e Generazione PDF (premium)
@@ -99,72 +175,3 @@ Migrazione automatica dei dati se lo schema cambia
   - Modifica orario e stipendio con effetto retroattivo o da data specifica.
   - Wizard per il licenziamento → Calcolo automatico del preavviso e liquidazione finale (TFR, ferie non godute).
   - Comunicazione automatizzata all'INPS (se possibile via API o generando il modulo precompilato).
-
-
-- 
-## 👤 Profilo Datore
-
-Inserimento dati anagrafici e fiscali → Salvataggio → Modifica
-
-## 🧍‍♀️ AssunzioneInserimento Collaboratore
-
-Inserimento dati → Selezione modalità retribuzione → Scenario → Conferma 
-
-## 💡 Modalità Retribuzione
-
-Modalità 1: Inserisci netto orario → Calcolo scenario → Conferma
-Modalità 2: Inserisci budget orario → Calcolo scenario → Conferma
-Modalità 3: inserisci il lordo → Calcolo scenario → Conferma 
-
-## 📅 Inserimento Ore
-
-Selezione settimana → Inserimento ore → Salvataggio 
-
-## 💰 Busta Paga
-
-Selezione mese → Calcolo → Visualizzazione 
-
-## 📆 Annualità Normativa
-
-Aggiornamento automatico tabelle → Adattamento calcoli → Notifica utente
-
-
-# Logiche Chiave
-
-Calcolo busta paga: lordo, INPS, IRPEF, netto
-Modalità retribuzione: input semplificato → scenario riepilogativo
-Annualità: database tabelle normative aggiornabili per ogni anno
-
-# Mappa di Navigazione
-🏠 Home
-  └─ Riepilogo collaboratore
-  └─ Accesso rapido a ore, busta paga, CUA
-
-👤 Profilo Datore
-  └─ Dati anagrafici
-  └─ Dati fiscali
-
-🧍 Collaboratore
-  └─ Inserimento dati
-  └─ Modalità retribuzione
-      └─ Netto desiderato
-      └─ Budget massimo
-
-📅 Calendario
-  └─ Visualizzazione mensile
-  └─ Inserimento ore
-  └─ Ferie
-
-💰 Busta Paga
-  └─ Selezione mese
-  └─ Calcolo
-  └─ PDF (premium)
-
-📄 CUA
-  └─ Generazione annuale
-  └─ PDF (premium)
-
-⚙️ Impostazioni
-  └─ Premium
-  └─ Privacy
-  └─ Reset dati

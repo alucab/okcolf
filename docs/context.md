@@ -7,7 +7,7 @@
 ## Stack
 - UI: OnsenUI + Alpine.js  
 - Utilities: jQuery (only if needed)  
-- Offline storage: sql.js (`db.js`)  
+- Offline storage: dexie.js (`db.js`)  
 - Backend: PocketBase (`api.js`)  
 - Auth: Pocketbase  (`auth.js`)  
 - Target: PWA (manifest + SW)  
@@ -15,11 +15,7 @@
 ---
 
 ## Structure
-/public: index.html, manifest.json, service-worker.js, /icons
-/src/css: main.css, variables.css
-/src/js: app.js, db.js, api.js, state.js, ui.js
-/src/views: login.html, register.html, home.html, notes.html, profile.html, etc.
-/src/components: tabbar.html, navbar.html, note-card.html,etc.
+
 
 ---
 
@@ -28,6 +24,7 @@
 - Prefer ES Modules; jQuery only for complex DOM/legacy code.  
 - Use modern JS (arrow functions, async/await, destructuring, optional chaining).  
 - Fetch or $.ajax for network; backend abstracted in `api.js`.  
+- Use **ISO 8601 strings** (`YYYY-MM-DD`) for storing dates.
 
 ---
 
@@ -42,22 +39,19 @@
 ---
 
 ## Offline-first Strategy
-- SQL.js for local data (`db.js`)   
+- dexie.js for local data (`db.js`)   
 - File saving ops abstracted to allow to change backend via `api.js`
 - All backend ops via `api.js` for easy swapping
    
 ---
 
 ## Authentication
-- Pocketbase: Auth 
-- All auth ops via `auth.js` for easy swapping
-- Persistent sessions for auto-login
+- no authentication
 
 ---
 
 ## Features
 - Base scaffolding, manifest.json + Service Worker  
 - Tabbar navigation (OnsenUI)  
-- Login/logout & registration (Firebase)  
-- Offline CRUD as per blueprint.md (sql.js)  
+- Offline CRUD as per blueprint.md (dexie.js)  
 - Toasts, loaders, responsive UI  
