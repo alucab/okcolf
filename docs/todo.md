@@ -1,5 +1,11 @@
 # TO DO LIST
 
+## Web
+- lighthouse score
+- caricare su dominio okcolf.it
+- esporre su github pages
+- cambiare le canonical url interne al codice
+
 ## HTML files
 - rivedere tutti i meta tags
 
