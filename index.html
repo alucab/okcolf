@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Charset & viewport -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PWA theme & color -->
+    <meta name="theme-color" content="#2b3e50">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png">
+    <link rel="mask-icon" href="/icons/maskable_icon.png" color="#2b3e50">
+
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Apple splash screen support (facoltativo ma utile per installazione PWA) -->
+    <link rel="apple-touch-startup-image" href="/icons/android-chrome-512x512.png">
+
+    <!-- Social media preview (OpenGraph / Facebook) -->
+    <meta property="og:title" content="OK Colf Express">
+    <meta property="og:description" content="Gestione lavoratori, contratti e pagamenti offline-first">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tuosito.com">
+    <meta property="og:image" content="/icons/share.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OK Colf Express">
+    <meta name="twitter:description" content="Gestione lavoratori, contratti e pagamenti offline-first">
+    <meta name="twitter:image" content="/icons/share.jpg">
+
+
+  <title>OK Colf Express</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <h1>OK Colf Express</h1>
+  <div id="status"></div>
+  <div id="workers-list"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
+  <script src="js/conf.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/log.js"></script>
+  <script src="js/sync.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => console.log('Service Worker registrato'))
+        .catch(err => console.error('Errore registrazione SW', err));
+    }
+
+    function updateStatus() {
+      document.getElementById('status').textContent = navigator.onLine
+        ? 'Online'
+        : 'Offline';
+    }
+    window.addEventListener('online', () => { updateStatus(); triggerSync(); });
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+  </script>
+</body>
+</html>
