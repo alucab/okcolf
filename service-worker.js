@@ -2,40 +2,52 @@ const DEV_MODE = true;
 const CORE_CACHE = 'core-v1';
 const STATIC_CACHE = 'static-v1';
 
+
+
 const coreAssets = [
   '/',
-  '/index.html',
-  '/offline.html',
-  '/css/main.css',
-  '/js/db.js',
-  '/js/app.js',
-  '/js/sync.js',
-  '/js/log.js',
-  '/js/services.js',
-  '/js/controllers.js',
-  '/js/conf.js',
-  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js'
+  'index.html',
+  'offline.html',
+  'css/main.css',
+  'js/db.js',
+  'js/app.js',
+  'js/sync.js',
+  'js/log.js',
+  'js/services.js',
+  'js/controllers.js',
+  'js/conf.js',
+  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js',
+  'https://unpkg.com/onsenui/css/onsenui.css',
+  'https://unpkg.com/onsenui/css/onsen-css-components.min.css',
+  'https://unpkg.com/ionicons@4.6.3/dist/css/ionicons.min.css',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap',
+  'https://unpkg.com/onsenui/js/onsenui.min.js'
 ];
 /* from manifest.json*/
 const staticAssets = [
-  '/assets/maskable_icon_x192.png',
-  '/assets/maskable_icon_x512.png',
-  '/assets/apple-touch-icon.png',
-  '/assets/maskable_icon.png',
-  '/assets/share.png'
+  'assets/maskable_icon_x192.png',
+  'assets/maskable_icon_x512.png',
+  'assets/apple-touch-icon.png',
+  'assets/maskable_icon.png',
+  'assets/share.png'
 ];
 
 const networkFirstWhitelist = [
-  '/index.html',
-  '/css/main.css',
-  '/js/db.js',
-  '/js/app.js',
-  '/js/sync.js',
-  '/js/log.js',
-  '/js/services.js',
-  '/js/controllers.js',
-  '/js/conf.js',
-  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js'
+  'index.html',
+  'css/main.css',
+  'js/db.js',
+  'js/app.js',
+  'js/sync.js',
+  'js/log.js',
+  'js/services.js',
+  'js/controllers.js',
+  'js/conf.js',
+  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js',
+  'https://unpkg.com/onsenui/css/onsenui.css',
+  'https://unpkg.com/onsenui/css/onsen-css-components.min.css',
+  'https://unpkg.com/ionicons@4.6.3/dist/css/ionicons.min.css',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap',
+  'https://unpkg.com/onsenui/js/onsenui.min.js'
 ];
 
 self.addEventListener('install', event => {
@@ -59,6 +71,13 @@ self.addEventListener('activate', event => {
     )
   );
   self.clients.claim();
+  // 3️⃣ Notifica ai client che il SW è nuovo
+  const allClients = self.clients.matchAll({ includeUncontrolled: true });
+  for (const client of allClients) {
+    client.postMessage({ type: 'NEW_VERSION_AVAILABLE' });
+  }
+
+  console.log('[SW] Activated new version and notified clients');
 });
 
 

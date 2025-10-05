@@ -21,82 +21,17 @@ year:
         amount_due_per_hour
   quarters :
     quarter_number, start, end, deadline
-}
 
-```json
-{
-  "social_security_payments":{
-    "id": "INTEGER, primary key",
-    "contract_id": "INTEGER, foreign key → contracts.id",  
-    "start_date": "TEXT, quarter start date",
-    "end_date": "TEXT, quarter end date (nullable if active)",
-    "quarter" :  "INTEGER",
-    "year" :  "INTEGER",
-    "number_of_weeks" : "INTEGER",
-    "number_of_hours" : "INTEGER",
-    "paid" : "BOOLEAN",
-    "payment_date": "TEXT, contract start date",
-  }
-}
-```
 
----
-
-## 2. Data Schema Description (JSON-like format)
-
-```json
-{
-  "workers": {
-    "id": "INTEGER, primary key",
-    "first_name": "TEXT, worker’s first name",
-    "last_name": "TEXT, worker’s last name",
-    "date_of_birth": "TEXT, date in YYYY-MM-DD format",
-    "phone": "TEXT, contact phone",
-    "email": "TEXT, optional email",
-    "tax_code": "TEXT,compulsory"
-  },
-  "employers": {
-    "id": "INTEGER, primary key",
-    "name": "TEXT, employer full name or company name",
-    "phone": "TEXT, contact phone",
-    "email": "TEXT, contact email",
-    "address": "TEXT, address"
-  },
-  "contracts": {
-    "id": "INTEGER, primary key",
-    "worker_id": "INTEGER, foreign key → workers.id",
-    "employer_id": "INTEGER, foreign key → employers.id",
-    "contract_no": "TEXT,optional",
-    "start_date": "TEXT, contract start date",
-    "end_date": "TEXT, contract end date (nullable if active)",
-    "hours_per_week": "INTEGER, contracted hours per week",
-    "hourly_wage": "REAL, wage per hour"
-  },
-  "work_sessions": {
-    "id": "INTEGER, primary key",
-    "contract_id": "INTEGER, foreign key → contracts.id",
-    "date": "TEXT, session date",
-    "hours_worked": "REAL, number of hours worked",
-    "notes": "TEXT, optional notes"
-  },
-  "payments": {
-    "id": "INTEGER, primary key",
-    "contract_id": "INTEGER, foreign key → contracts.id",
-    "date": "TEXT, payment date",
-    "amount": "REAL, payment amount",
-    "method": "TEXT, e.g., cash, bank transfer"
-  },
-  "social_security_payments":{
-    "id": "INTEGER, primary key",
-    "contract_id": "INTEGER, foreign key → contracts.id",  
-    "start_date": "TEXT, quarter start date",
-    "end_date": "TEXT, quarter end date (nullable if active)",
-    "quarter" :  "INTEGER",
-    "year" :  "INTEGER",
-    "number_of_weeks" : "INTEGER",
-    "number_of_hours" : "INTEGER",
-    "paid" : "BOOLEAN",
-    "payment_date": "TEXT, contract start date",
-  }
-}
+```js
+db.version(1).stores({
+  workers: "++id,first_name,last_name,date_of_birth,phone,email,last_updated",
+  employers: "++id,name,phone,email,address,last_updated",
+  contracts: "++id,worker_id,employer_id,start_date,end_date,hours_per_week,hourly_wage,last_updated",
+  work_sessions: "++id,contract_id,date,hours_worked,notes,last_updated",
+  payments: "++id,contract_id,date,amount,method,last_updated",
+  logs: "++id,timestamp,type,message",
+  kv: '&key',
+  forms: '&id, updatedAt'
+});
 ```

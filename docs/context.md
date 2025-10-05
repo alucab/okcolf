@@ -8,15 +8,7 @@
 - UI: OnsenUI + Alpine.js  
 - Utilities: jQuery (only if needed)  
 - Offline storage: dexie.js (`db.js`)  
-- Backend: PocketBase (`api.js`)  
-- Auth: Pocketbase  (`auth.js`)  
 - Target: PWA (manifest + SW)  
-
----
-
-## Structure
-
-
 ---
 
 ## Rules & Conventions

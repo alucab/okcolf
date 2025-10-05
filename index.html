@@ -17,28 +17,28 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="mask-icon" href="/assets/maskable_icon.png" color="#2b3e50">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="mask-icon" href="assets/maskable_icon.png" color="#2b3e50">
 
     <!-- Manifest PWA -->
     <link rel="manifest" href="manifest.json">
 
     <!-- Apple splash screen support (facoltativo ma utile per installazione PWA) -->
-    <link rel="apple-touch-startup-image" href="/assets/maskable_icon_x512.png">
+    <link rel="apple-touch-startup-image" href="assets/maskable_icon_x512.png">
 
     <!-- Social media preview (OpenGraph / Facebook) -->
     <meta property="og:title" content="OK Colf Express">
     <meta property="og:description" content="Gestione lavoratori, contratti e pagamenti offline-first">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tuosito.com">
-    <meta property="og:image" content="/assets/share.jpg">
+    <meta property="og:url" content="https://alucab.github.io/okcolf/">
+    <meta property="og:image" content="assets/share.jpg">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="OK Colf Express">
     <meta name="twitter:description" content="Gestione lavoratori, contratti e pagamenti offline-first">
-    <meta name="twitter:image" content="/assets/share.jpg">
+    <meta name="twitter:image" content="assets/share.jpg">
 
 
     <title>OK Colf Express</title>
@@ -120,7 +120,7 @@
                         <div class="menu-footer">
                             <div class="menu-footer__info">OK Colf Express</div>
                             <div class="menu-footer__version">v1.0.0</div>
-                            
+
                         </div>
                     </ons-page>
                 </ons-splitter-side>
@@ -199,9 +199,26 @@
 
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .then(() => console.log('Service Worker registrato'))
-                .catch(err => console.error('Errore registrazione SW', err));
+            navigator.serviceWorker
+                .register('service-worker.js')
+                .then(registration => {
+                    console.log('✅ Service Worker registered');
+
+                    // 🔹 Listen for messages from the SW (e.g., NEW_VERSION_AVAILABLE)
+                    navigator.serviceWorker.addEventListener('message', event => {
+                        if (event.data?.type === 'NEW_VERSION_AVAILABLE') {
+                            console.warn('⚡ New version detected, refreshing app...');
+                            window.location.reload(); // triggers new app + DB migration
+                        }
+                    });
+
+                    // 🔹 Optional: detect controller changes (new SW takes control)
+                    navigator.serviceWorker.addEventListener('controllerchange', () => {
+                        console.log('🔁 Controller changed → refreshing app');
+                        window.location.reload();
+                    });
+                })
+                .catch(err => console.error('❌ Service Worker registration failed:', err));
         }
 
         function updateStatus() {
