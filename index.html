@@ -118,12 +118,12 @@
 
                         <!-- BOTTOM NAV -->
                         <ons-tabbar id="myTabBar" position="bottom">
-                            <ons-tab label="Home" icon="md-home" page="home-html" active></ons-tab>
+                            <ons-tab label="Home" icon="ion-ios-home" page="home-html" active></ons-tab>
                             <ons-tab hidden label="Datore" page="/html/datore.html"></ons-tab>
                             <ons-tab hidden label="Collaboratore" page="/html/collaboratore.html"></ons-tab>
-                            <ons-tab label="Ore" icon="md-calendar" page="/html/ore.html"></ons-tab>
+                            <ons-tab label="Ore" icon="ion-ios-calendar" page="/html/ore.html"></ons-tab>
                             <ons-tab hidden label="Calendario" page="/html/calendario.html"></ons-tab>
-                            <ons-tab label="Busta Paga" icon="md-money" page="/html/busta.html"></ons-tab>
+                            <ons-tab label="Busta Paga" icon="ion-ios-cash" page="/html/busta.html"></ons-tab>
                             <ons-tab hidden label="Contributi" page="/html/contributi.html"></ons-tab>
                             <ons-tab hidden label="Impostazioni" page="/html/settings.html"></ons-tab>
                         </ons-tabbar>
@@ -135,29 +135,29 @@
     </template>
     <template id="home-html">
         <ons-page>
-        <ons-card onclick="switchTabByLabel('Collaboratore')">
-            <div class="shortcut-title">
-                <ons-icon icon="ion-ios-person-add"></ons-icon>
-                Aggiungi Collaboratore
-            </div>
-            <div class="shortcut-desc">Configura un nuovo contratto</div>
-        </ons-card>
+            <ons-card onclick="switchTabByLabel('Collaboratore')">
+                <div class="shortcut-title">
+                    <ons-icon icon="ion-ios-person-add"></ons-icon>
+                    Aggiungi Collaboratore
+                </div>
+                <div class="shortcut-desc">Configura un nuovo contratto</div>
+            </ons-card>
 
-        <ons-card onclick="switchTabByLabel('Calendario')">
-            <div class="shortcut-title">
-                <ons-icon icon="ion-ios-time"></ons-icon>
-                Inserisci Ore
-            </div>
-            <div class="shortcut-desc">Registra ore e assenze dal calendario</div>
-        </ons-card>
+            <ons-card onclick="switchTabByLabel('Calendario')">
+                <div class="shortcut-title">
+                    <ons-icon icon="ion-ios-time"></ons-icon>
+                    Inserisci Ore
+                </div>
+                <div class="shortcut-desc">Registra ore e assenze dal calendario</div>
+            </ons-card>
 
-        <ons-card onclick="switchTabByLabel('Contributi')">
-            <div class="shortcut-title">
-                <ons-icon icon="ion-ios-stats"></ons-icon>
-                Contributi
-            </div>
-            <div class="shortcut-desc">Genera prospetto INPS/IRPEF</div>
-        </ons-card>
+            <ons-card onclick="switchTabByLabel('Contributi')">
+                <div class="shortcut-title">
+                    <ons-icon icon="ion-ios-stats"></ons-icon>
+                    Contributi
+                </div>
+                <div class="shortcut-desc">Genera prospetto INPS/IRPEF</div>
+            </ons-card>
 
         </ons-page>
     </template>

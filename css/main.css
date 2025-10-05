@@ -257,31 +257,81 @@ ons-card:nth-child(3) {
   background: var(--white) !important;
   box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
   border-top: 1px solid rgba(0, 122, 94, 0.1);
+  height: 56px;
+}
+
+.tabbar__content {
+  background: var(--white) !important;
 }
 
 .tabbar__button {
-  color: var(--text-medium);
+  color: var(--text-light) !important;
   transition: var(--transition);
+  position: relative;
 }
 
 .tabbar__button:hover {
-  background: var(--secondary-cream);
+  background: var(--secondary-cream) !important;
 }
 
-.tabbar__button.active {
+/* Tab attivo - OnsenUI usa input:checked */
+.tabbar__item input:checked + .tabbar__button {
   color: var(--primary-green) !important;
-  background: var(--accent-gold-light);
+  background: var(--accent-gold-light) !important;
 }
 
+/* Indicatore superiore per tab attivo */
+.tabbar__item input:checked + .tabbar__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background: var(--primary-green);
+  border-radius: 0 0 3px 3px;
+}
+
+/* Icone */
 .tabbar__icon {
   font-size: 24px;
+  color: inherit;
 }
 
+.tabbar__item input:checked + .tabbar__button .tabbar__icon {
+  color: var(--primary-green) !important;
+}
+
+/* Label */
 .tabbar__label {
   font-size: 11px;
   font-weight: 500;
-  margin-top: 2px;
+  margin-top: 4px;
   font-family: 'Inter', sans-serif;
+  color: inherit;
+}
+
+.tabbar__item input:checked + .tabbar__button .tabbar__label {
+  color: var(--primary-green) !important;
+  font-weight: 600;
+}
+
+/* Rimuovi il focus blu di default */
+.tabbar__button:focus,
+.tabbar__button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Stile icone Ionicons nel tabbar */
+.tabbar__button ons-icon {
+  color: inherit;
+  transition: var(--transition);
+}
+
+.tabbar__item input:checked + .tabbar__button ons-icon {
+  color: var(--primary-green) !important;
 }
 
 /* ========================================
