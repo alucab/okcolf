@@ -13,22 +13,10 @@
   --text-medium: #666666;
   --text-light: #999999;
   --white: #FFFFFF;
-  --shadow-soft: 0 2px 12px  #FAF7F2;
-  --shadow-medium: 0 4px 20px  #FAF7F2;
+  --shadow-soft: 0 2px 12px rgba(0, 122, 94, 0.08);
+  --shadow-medium: 0 4px 20px rgba(0, 122, 94, 0.12);
   --border-radius: 12px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --background-color:var(--secondary-cream);
-  --page-background-color: var(--secondary-cream);
-}
-
-.page__background {
-    background-color: #FAF7F2 ! important;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    box-sizing: border-box;
 }
 
 /* 🧱 TIPOGRAFIA */
@@ -47,6 +35,24 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--text-dark);
+}
+
+/* ========================================
+   SFONDI GLOBALI ONSENUI
+   ======================================== */
+/* Background principale app - crema */
+.page__background {
+  background-color: var(--secondary-cream) !important;
+}
+
+/* Override per tutte le pagine */
+ons-page {
+  background: var(--secondary-cream) !important;
+}
+
+.page__content {
+  background: var(--secondary-cream) !important;
+  padding: 16px;
 }
 
 /* ========================================
@@ -84,18 +90,22 @@ h1, h2, h3, h4, h5, h6,
   box-shadow: 2px 0 16px rgba(0, 0, 0, 0.1);
 }
 
+.side-menu .page__background {
+  background: var(--white) !important;
+}
+
 .side-menu ons-page {
   background: var(--white) !important;
 }
 
 .side-menu .page__content {
-  background: var(--secondary-cream) !important;
+  background: var(--white) !important;
   padding: 0;
 }
 
 .side-menu ons-list {
   background: var(--white) !important;
-  background-color: var(--secondary-cream) !important;
+  background-color: var(--white) !important;
 }
 
 .side-menu ons-list-header {
@@ -111,22 +121,41 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .side-menu ons-list-item {
-  background: var(--white);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-soft);
-  padding: 12px;
-  margin: 6px 2px;
-  border-left: 4px solid var(--primary-green);
-
+  padding: 14px 16px !important;
+  margin: 4px 8px;
+  color: var(--text-dark) !important;
+  font-weight: 500;
   transition: var(--transition);
+  border-left: 3px solid transparent;
+  border-radius: 8px;
   cursor: pointer;
+  border-bottom: none !important;
+  background: var(--white) !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
+/* Stile icone Feather nel menu */
+.side-menu ons-list-item svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary-green);
+  stroke-width: 2;
+  transition: var(--transition);
+}
+
+/* Stile icone Ionicons nel menu */
+.side-menu ons-list-item ons-icon {
+  color: var(--primary-green);
+  font-size: 20px;
+  margin-right: 12px;
+  transition: var(--transition);
 }
 
 .side-menu ons-list-item:hover {
   background: var(--secondary-cream) !important;
   border-left-color: var(--primary-green);
-  border-right-color: var(--primary-green);
   transform: translateX(2px);
 }
 
@@ -144,21 +173,6 @@ h1, h2, h3, h4, h5, h6,
   border-bottom: none !important;
 }
 
-.side-menu .list-item__center {
-      background-size: 100% 0px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-}
-
-.side-menu ons-list-item ons-icon {
-  color: var(--primary-green);
-  font-size: 20px;
-  margin-right: 12px;
-  transition: var(--transition);
-}
- 
-
 /* ========================================
    PAGINA PRINCIPALE
    ======================================== */
@@ -166,13 +180,8 @@ h1, h2, h3, h4, h5, h6,
   background: var(--secondary-cream) !important;
 }
 
-ons-page {
-  background: var(--secondary-cream);
-}
-
-.page__content {
-  background: var(--secondary-cream);
-  padding: 16px;
+#tabbarPage .page__background {
+  background: var(--secondary-cream) !important;
 }
 
 /* ========================================
@@ -212,11 +221,6 @@ ons-card:nth-child(3) {
   border-left-color: var(--primary-green);
 }
 
-.shortcut-title ons-icon {
-  color: var(--primary-green);
-  font-size: 24px;
-}
-
 .shortcut-title {
   font-size: 18px;
   font-weight: 600;
@@ -225,6 +229,18 @@ ons-card:nth-child(3) {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.shortcut-title svg {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-green);
+  stroke-width: 2;
+}
+
+.shortcut-title ons-icon {
+  color: var(--primary-green);
+  font-size: 24px;
 }
 
 .shortcut-desc {
