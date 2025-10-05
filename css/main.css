@@ -216,8 +216,7 @@ html .side-menu .menu-footer {
 }
 
 html .side-menu .menu-footer__version {
-  font-weight: 600;
-  color: #007A5E;
+  color: #999999;
   margin-bottom: 4px;
 }
 
