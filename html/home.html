@@ -1,0 +1,60 @@
+<ons-page>
+
+
+    <ons-card>
+        <div class="shortcut-title">➕ Aggiungi Collaboratore</div>
+        <div class="shortcut-desc">Configura un nuovo contratto</div>
+    </ons-card>
+
+    <ons-card>
+        <div class="shortcut-title">🗓️ Inserisci Ore</div>
+        <div class="shortcut-desc">Registra ore e assenze dal calendario</div>
+    </ons-card>
+
+    <ons-card>
+        <div class="shortcut-title">📊 Contributi</div>
+        <div class="shortcut-desc">Genera prospetto INPS/IRPEF</div>
+    </ons-card>
+
+
+
+    <!-- CARD: Stato -->
+    <ons-card>
+        <div class="shortcut-title">📌 Stato attuale</div>
+        <div id="status">
+            <!-- Esempio contenuto dinamico -->
+            <p><b>Ultimo backup:</b> 02/10/2025</p>
+            <p><b>Contributi da versare:</b> 152,00 € (entro 16/10)</p>
+            <p><b>Collaboratori attivi:</b> 2</p>
+        </div>
+    </ons-card>
+
+
+    <!-- CARD: Lista collaboratori -->
+    <ons-card>
+        <div class="shortcut-title">👥 Collaboratori</div>
+        <div id="workers-list">
+            <!-- Lista dinamica -->
+            <ons-list>
+                <ons-list-item tappable>
+                    <div class="left">🧹</div>
+                    <div class="center">
+                        <span class="list-item__title">Maria Rossi</span>
+                        <span class="list-item__subtitle">Colf · Contratto attivo</span>
+                    </div>
+                    <div class="right">💰 600€/mese</div>
+                </ons-list-item>
+
+                <ons-list-item tappable>
+                    <div class="left">👶</div>
+                    <div class="center">
+                        <span class="list-item__title">Luca Bianchi</span>
+                        <span class="list-item__subtitle">Babysitter · Contratto attivo</span>
+                    </div>
+                    <div class="right">💰 8€/h</div>
+                </ons-list-item>
+            </ons-list>
+        </div>
+    </ons-card>
+
+</ons-page>

@@ -10,45 +10,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PWA theme & color -->
-    <meta name="theme-color" content="#2b3e50">
+    <meta name="theme-color" content="#007A5E">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <!--meta name="apple-mobile-web-app-capable" content="yes"-->
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="mask-icon" href="/icons/maskable_icon.png" color="#2b3e50">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="mask-icon" href="/assets/maskable_icon.png" color="#2b3e50">
 
     <!-- Manifest PWA -->
     <link rel="manifest" href="/manifest.json">
 
     <!-- Apple splash screen support (facoltativo ma utile per installazione PWA) -->
-    <link rel="apple-touch-startup-image" href="/icons/maskable_icon_x512.png">
+    <link rel="apple-touch-startup-image" href="/assets/maskable_icon_x512.png">
 
     <!-- Social media preview (OpenGraph / Facebook) -->
     <meta property="og:title" content="OK Colf Express">
     <meta property="og:description" content="Gestione lavoratori, contratti e pagamenti offline-first">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tuosito.com">
-    <meta property="og:image" content="/icons/share.jpg">
+    <meta property="og:image" content="/assets/share.jpg">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="OK Colf Express">
     <meta name="twitter:description" content="Gestione lavoratori, contratti e pagamenti offline-first">
-    <meta name="twitter:image" content="/icons/share.jpg">
+    <meta name="twitter:image" content="/assets/share.jpg">
 
 
     <title>OK Colf Express</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/ionicons@4.6.3/dist/css/ionicons.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap"
+        rel="stylesheet">
+    <!-- (opzionale) Icon set such as Feather/Lucide via CDN or inline SVG -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 </head>
 
 <body>
-    <h1>OK Colf Express</h1>
-    <div id="status"></div>
-    <div id="workers-list"></div>
+    <ons-navigator id="myNavigator" page="splitter.html">
+    </ons-navigator>
+
+    <template id="splitter.html">
+        <ons-page>
+
+
+
+            <ons-splitter id="mySplitter">
+                <!-- MENU LATERALE -->
+                <ons-splitter-side id="myMenu" side="left" width="220px" collapse swipeable class="side-menu">
+                    <ons-page>
+                        <ons-list>
+                            <ons-list-header>Menu</ons-list-header>
+                            <ons-list-item tappable onclick="switchTabByLabel('Home')">🏠 Home</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Datore')">👤 Profilo
+                                Datore</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Collaboratore')">🧍
+                                Collaboratore</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Calendario')">📅
+                                Calendario</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Busta Paga')">💰 Busta
+                                Paga</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Contributi')">💰
+                                Contributi</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Impostazioni')">⚙️
+                                Impostazioni</ons-list-item>
+                        </ons-list>
+                    </ons-page>
+                </ons-splitter-side>
+
+                <!-- CONTENUTO PRINCIPALE -->
+                <ons-splitter-content>
+                    <ons-page id="tabbarPage">
+
+                        <ons-toolbar class="main-toolbar">
+                            <div class="left">
+                                <!-- Toolbar-button with different icons depending on the platform. -->
+                                <ons-toolbar-button onclick="document.querySelector('#myMenu').toggle()">
+                                    <ons-icon icon="ion-md-menu"></ons-icon>
+                                </ons-toolbar-button>
+                            </div>
+                            <div class="center app-title">OK COLF Express</div>
+                            <div class="right">
+                            </div>
+                        </ons-toolbar>
+
+
+                        <!-- BOTTOM NAV -->
+                        <ons-tabbar id="myTabBar" position="bottom">
+                            <ons-tab label="Home" icon="md-home" page="home-html" active></ons-tab>
+                            <ons-tab hidden label="Datore" page="/html/datore.html"></ons-tab>
+                            <ons-tab hidden label="Collaboratore" page="/html/collaboratore.html"></ons-tab>
+                            <ons-tab label="Ore" icon="md-calendar" page="/html/ore.html"></ons-tab>
+                            <ons-tab hidden label="Calendario" page="/html/calendario.html"></ons-tab>
+                            <ons-tab label="Busta Paga" icon="md-money" page="/html/busta.html"></ons-tab>
+                            <ons-tab hidden label="Contributi" page="/html/contributi.html"></ons-tab>
+                            <ons-tab hidden label="Impostazioni" page="/html/settings.html"></ons-tab>
+                        </ons-tabbar>
+                    </ons-page>
+
+                </ons-splitter-content>
+            </ons-splitter>
+        </ons-page>
+    </template>
+    <template id="home-html">
+        <ons-page>
+
+
+            <ons-card>
+                <div class="shortcut-title">➕ Aggiungi Collaboratore</div>
+                <div class="shortcut-desc">Configura un nuovo contratto</div>
+            </ons-card>
+
+            <ons-card>
+                <div class="shortcut-title">🗓️ Inserisci Ore</div>
+                <div class="shortcut-desc">Registra ore e assenze dal calendario</div>
+            </ons-card>
+
+            <ons-card>
+                <div class="shortcut-title">📊 Contributi</div>
+                <div class="shortcut-desc">Genera prospetto INPS/IRPEF</div>
+            </ons-card>
+        </ons-page>
+    </template>
 
     <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
     <script src="js/conf.js"></script>
@@ -56,7 +148,9 @@
     <script src="js/log.js"></script>
     <script src="js/sync.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
+
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
@@ -65,9 +159,9 @@
         }
 
         function updateStatus() {
-            document.getElementById('status').textContent = navigator.onLine
+            /*document.getElementById('status').textContent = navigator.onLine
                 ? 'Online'
-                : 'Offline';
+                : 'Offline';*/
         }
         window.addEventListener('online', () => { updateStatus(); triggerSync(); });
         window.addEventListener('offline', updateStatus);

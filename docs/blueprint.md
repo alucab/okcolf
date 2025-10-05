@@ -1,177 +1,397 @@
-# Problema
-Le famiglie italiane che impiegano collaboratori domestici a ore (colf, babysitter, ecc.) affrontano difficoltà nella gestione amministrativa: assunzione, tracciamento ore, calcolo buste paga, contributi INPS e obblighi fiscali come la Comunicazione Unica Annuale (CUA). Le soluzioni esistenti sono complesse, costose e non mobile-first.
+# Blueprint – OK Colf PWA
 
-# Approccio Strategico
-Realizzare una Progressive Web App (PWA) semplice, economica e conforme alla normativa italiana, con:
+## 1. Problema  
+Le famiglie italiane che impiegano collaboratori domestici a ore (colf, babysitter, ecc.) affrontano difficoltà nella gestione amministrativa:  
+- Assunzione e compilazione contratto  
+- Tracciamento ore lavorate  
+- Calcolo buste paga  
+- Contributi INPS  
+- Obblighi fiscali (es. Comunicazione Unica Annuale – CUA)  
 
-Frontend Onsen UI per UX mobile-friendly
-Persistenza locale (IndexedDB o LocalStorage)
-Backend opzionale (PocketBase solo per sincronizzazione futura)
-Modello freemium: funzionalità base gratuite, premium a €9,99/anno
-Focus su un solo collaboratore a ore
-UX semplificata e flussi guidati
-Adattamento automatico alle normative annuali
+Le soluzioni esistenti sono complesse, costose e non mobile-first.  
 
-# Allineamento Soluzione
+---
 
-- Conforme a INPS, IRPEF, CCNL
-- Mobile-first, UX semplificata
-- Prezzo competitivo
-- Feature differenziante: modalità retribuzione semplificata
-- Adattamento automatico alle normative annuali
+## 2. Approccio Strategico  
+- Progressive Web App (PWA) semplice, economica e conforme alla normativa italiana  
+- Modello freemium: funzionalità base gratuite, premium a €9,99/anno in futuro  
+- Focus su **un solo collaboratore a ore** (no badanti conviventi, no casi complessi)  
+- UX semplificata e flussi guidati  
+- Adattamento automatico alle normative annuali  
 
-# Narrative
-Utente 1 – Maria: Vuole che la sua babysitter riceva €8 netti all’ora. L’app calcola automaticamente il lordo e i contributi.
-Utente 2 – Luca: Vuole spendere al massimo €10/ora per la sua colf. L’app mostra quanto riceverà la collaboratrice.
-Edge Case: L’utente dimentica di registrare ore per una settimana. L’app lo avvisa e consente l’inserimento retroattivo.
+---
 
-# Obiettivi
-## Metriche
+## 3. Allineamento Normativo  
 
-- 1.000 utenti attivi in 3 mesi
-- 10% conversione a premium
-- 80% soddisfazione utente
-- 100% conformità legale (INPS/CUA)
+| Obbligo / Regola | Copertura nell’app |
+|------------------|--------------------|
+| INPS contributi  | Tabelle contributive annuali aggiornabili |
+| IRPEF            | Calcolo base ritenute e netto da lordo |
+| CCNL Colf        | Tabelle minimi contrattuali per categoria (pulizie, babysitter) |
+| Annualità        | Database aggiornabile → calcoli sempre aggiornati |
+| Trasparenza      | Scenari chiari per netto, lordo e budget massimo |
 
-## Modello di Impatto
+---
 
-- App gratuita
+## 4. Narrative d’Uso  
 
-# Funzionalità Chiave
+- **Maria (Babysitter)** → vuole che la babysitter riceva €8 netti/ora → l’app calcola lordo + contributi.  
+- **Luca (Colf)** → vuole spendere massimo €10/ora → l’app mostra il netto per la collaboratrice.  
+- **Utente Occasionale** → non inserisce ore ogni giorno, ma solo ore totali mensili → l’app consente inserimento retroattivo e calcola comunque.  
+- **Edge Case** → l’utente dimentica di registrare ore per una settimana → reminder e recupero dati retroattivo.  
 
-## Aspetti tecnici fondamentali
+---
 
-Persistenza locale (sql.js salvato periodicamente in indexed db)
-Migrazione automatica dei dati se lo schema cambia o se c'e' un update del SW
+## 5. Obiettivi  
 
-## UC1 – Onboarding rapido collaboratore
+### Metriche di Successo  
+- **1.000 utenti attivi** in 3 mesi (registrati con email)  
+- **80% soddisfazione utente** (survey in-app)  
+- **70% utenti che inseriscono ore regolarmente** (leading metric)  
+- **50% utenti che simulano busta paga almeno 2 volte**  
 
-- Onboarding e configurazione iniziale
-  - Configurazione iniziale di base (esempio: dati della famiglia, IBAN per pagamenti, ecc.).
-  - Gestione profilo datore di lavoro (inserimento/edit)
-  - Gestione collaboratore(assunzione/editing) 
-  - Selezione del tipo di collaboratore (esempio: pulizie, babysitter) per personalizzare le regole di contratto.
-  - Wizard per l’assunzione → Domande guidate per compilare il contratto (esempio: durata, orario settimanale, retribuzione, ecc.).
-  - Modalità retribuzione semplificata:
-    - Netto desiderato
-    - Budget massimo datore
-    - Classica definizione del lordo
+### Modello di Impatto  
+- Versione gratuita come MVP  
+- Premium in futuro con documenti e funzioni avanzate  
 
-## UC2 – Tracking ore giornaliere / settimanali
+---
 
-- Tracciamento ore settimanali e attività
-  - Inserimento automatico o manuale delle ore → Opzione per segnare le ore lavorate giornalmente o settimanalmente.
-  - Calcolo automatico degli straordinari e delle maggiorazioni (esempio: lavoro festivo).
-  - Notifiche per ricordare di inserire le ore.
-  - Gestione ferie e permessi con tracciamento del saldo.
-## UC3 – Schermata simulazione costi
-## UC4 – Export / Backup dati
-## UC5 – Reminder trimestrale simulato
-## UC6 – Suggerisci nuova funzione
+## 6. MVP Feature Set  
 
-# Flussi utente
+| Funzione | Scopo per l’utente | Stato |
+|----------|-------------------|-------|
+| Onboarding datore | Configurazione profilo fiscale | MVP |
+| Onboarding collaboratore | Inserimento contratto guidato | MVP |
+| Modalità retribuzione (Netto, Budget, Lordo) | Calcolo semplificato scenario | MVP |
+| Tracking ore (giornaliere/settimanali/mensili) | Inserire lavoro svolto | MVP |
+| Reminder inserimento ore | Non dimenticare registrazioni | MVP |
+| Ferie e permessi | Tracciamento saldo | MVP |
+| Calcolo busta paga (lordo, INPS, IRPEF, netto) | Trasparenza costi | MVP |
+| Proiezioni TFR e 13ª | Visione futura | MVP |
+| Reminder contributi trimestrali | Aiuto sugli obblighi | MVP |
+| Export / Backup dati | Sicurezza dati | MVP |
+| Suggerisci nuova funzione | Coinvolgimento utenti | MVP |
 
-- 
-## 👤 Profilo Datore
+---
 
-Inserimento dati anagrafici e fiscali → Salvataggio → Modifica
+## 7. Stack Tecnico  
 
-## 🧍‍♀️ Assunzione/Inserimento Collaboratore
+- **Target**: PWA (manifest + service worker), mobile-first  
+- **UI**: OnsenUI + Alpine.js  
+- **Utilities**: jQuery (solo se necessario)  
+- **Offline storage**: Dexie.js (IndexedDB wrapper `db.js`)  
+- **Persistenza & Update**: migrazione schema automatica + update dati se cambia normativa  
+- **Deployment**: GitHub Pages / Cloudflare Pages (iniziale) → futura valutazione Vercel  
+- **Testing**: manuale per MVP, con possibilità di aggiungere unit test JS  
 
-Inserimento dati → Selezione modalità retribuzione → Scenario → Conferma 
-Cambio Retribuzione → Selezione modalità retribuzione → Scenario → Conferma 
+---
 
-## 💡 Modalità Retribuzione
+## 8. Use Cases  
 
-Modalità 1: Inserisci netto orario → Calcolo scenario → Conferma
-Modalità 2: Inserisci budget orario → Calcolo scenario → Conferma
-Modalità 3: inserisci il lordo → Calcolo scenario → Conferma 
+# Use Cases Core/MVP
 
-## 📅 Inserimento Ore
+## UC0 – Registrazione e Primo Accesso
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** Utente non autenticato  
+**Flusso principale:**
+1. L’utente apre l’app per la prima volta.
+2. L’app propone due opzioni: *Modalità locale* o *Registrazione via email*.
+3. In caso di registrazione, l’utente inserisce email → riceve OTP → valida account.
+4. Sessione salvata localmente.
+**Flussi alternativi:** Email non valida / OTP scaduto → errore con retry.  
+**Dati coinvolti:** `User`  
+**Acceptance criteria:** Utente può scegliere modalità locale o registrazione via email; sessione persistente.
 
-Selezione settimana → Inserimento ore → Salvataggio 
+---
 
-## 💰 Busta Paga
+## UC1 – Configurazione Collaboratore (Contratto Iniziale)
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** Utente autenticato (locale o registrato)  
+**Flusso principale:**
+1. L’utente crea un nuovo collaboratore.
+2. Inserisce dati anagrafici (nome, CF, IBAN).
+3. Selezione tipo collaboratore (pulizie, babysitter) → regole CCNL 
+4. Imposta parametri contratto (ore settimanali, paga oraria/mensile, contributi).
+5. Modalità retribuzione (Netto / Budget massimo / Lordo)  
+6. Salva contratto attivo.
+7. Edit contratto → ripassa tutto il wizard  
+**Flussi alternativi:** Dati mancanti o invalidi → warning (es. CF non valido).  
+**Dati coinvolti:** `Collaborator`, `Contract`  
+**Acceptance criteria:** Contratto valido e attivo salvato nel DB locale.
 
-Selezione mese → Calcolo → Visualizzazione 
+---
 
-## 📆 Annualità Normativa
+## UC2 – Inserimento Ore e Assenze
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** Collaboratore attivo con contratto  
+**Flusso principale:**
+1. L’utente apre calendario.
+2. Seleziona giorno → aggiunge ore lavorate o assenze (vacanza, malattia).
+3. L’app calcola automaticamente ore totali settimana/mese.
+4. Inserimento manuale o automatico (giornaliero/settimanale/mensile)  
+5. Calcolo straordinari e festività  
+6. Reminder inserimento ore  
+7. Gestione ferie e saldo  
+**Flussi alternativi:** Inserimento in giorno futuro → warning.  
+**Dati coinvolti:** `TimesheetEntry`  
+**Acceptance criteria:** Ogni giorno può contenere ore/assenze; calcoli aggiornati correttamente.
 
-Aggiornamento automatico tabelle → Adattamento calcoli → Notifica utente
+---
+
+## UC3 – Visualizzazione Busta Paga
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** 
+- Collaboratore attivo con contratto valido
+- Ore settimanali/mensili inserite nel sistema
+
+**Flusso principale:**
+1. L’utente seleziona “Busta Paga” dal menu principale.
+2. Seleziona il mese di interesse.
+3. L’app calcola automaticamente:
+   - Stipendio lordo
+   - Contributi INPS e IRPEF
+   - Stipendio netto
+   - Eventuali straordinari, maggiorazioni o bonus
+4. L’app mostra la proiezione di TFR e 13ª mensilità.
+5. Visualizzazione in modalità riepilogativa con possibilità di dettaglio per voce.
+
+**Flussi alternativi:**
+- Dati mancanti (ore o contratto incompleto) → messaggio “Dati insufficienti per il calcolo” e possibilità di inserimento retroattivo.
+- Mese selezionato senza ore registrate → avviso e opzione di inserimento ore manuale.
+
+**Dati coinvolti:** 
+- `TimesheetEntry` (ore lavorate, straordinari)  
+- `Contract` (tipo retribuzione, contributi)  
+- `ContributionProposal` (calcolo INPS/IRPEF)
+
+**Acceptance criteria:** 
+- L’app mostra busta paga completa e coerente con i dati inseriti.
+- Tutti i calcoli devono essere aggiornati in tempo reale.
+- L’utente può esportare o salvare il riepilogo (PDF/JSON) per uso personale.
+- Possibilità di consultare proiezioni annuali basate sulle ore inserite
+
+---
+
+## UC4 – Generazione Prospetto Contributivo
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** Ore inserite nel mese  
+**Flusso principale:**
+1. L’utente seleziona “Calcola contributi”.
+2. L’app genera prospetto INPS/IRPEF in base a contratto + ore.
+3. Mostra importi da versare e scadenze.
+**Flussi alternativi:** Contratto incompleto → errore “Dati insufficienti”.  
+**Dati coinvolti:** `Contract`, `TimesheetEntry`, `ContributionProposal`  
+**Acceptance criteria:** Prospetto numerico coerente salvato nel DB.
+
+---
+
+## UC6 – Backup e Ripristino Dati
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** Dati salvati in DB locale  
+**Flusso principale:**
+1. L’utente apre Impostazioni → Backup.
+2. App genera file `.json` crittografato.
+3. Per ripristino, l’utente importa file valido.
+**Flussi alternativi:** File corrotto → errore.  
+**Dati coinvolti:** Tutte le entità  
+**Acceptance criteria:** Export/import completati; dati ripristinati correttamente.
+
+---
+
+## UC8 – Privacy & GDPR (Export/Delete)
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** Utente registrato o locale con dati  
+**Flusso principale:**
+1. L’utente accede a Impostazioni → Privacy.
+2. Esporta dati in JSON.
+3. Cancella account e dati locali se richiesto.
+**Dati coinvolti:** Tutte le entità  
+**Acceptance criteria:** Export e delete funzionano con conferma e undo temporaneo.
+
+---
+
+## UC9 – Reminder Configurabili
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** App installata  
+**Flusso principale:**
+1. Utente apre Impostazioni → Notifiche.
+2. Seleziona reminder (es. ore, contributi).
+3. Imposta frequenza (giornaliera, settimanale, mensile).
+4. App genera notifiche in base alla scelta.
+**Dati coinvolti:** `ReminderSetting`  
+**Acceptance criteria:** Reminder appaiono nei tempi configurati.
+
+---
+
+## UC10 – Validazione Dati Fiscali
+**Priorità:** Core  
+**Attori:** Sistema / Datore  
+**Precondizioni:** Inserimento dati anagrafici/contrattuali  
+**Flusso principale:**
+1. L’utente inserisce dati (CF, IBAN, ecc.).
+2. Il sistema valida formati e correttezza.
+3. Se valido → consente salvataggio.
+**Flussi alternativi:** Dati non validi → errore.  
+**Dati coinvolti:** `Collaborator`, `Contract`  
+**Acceptance criteria:** Nessun salvataggio possibile con dati invalidi.
+
+---
+
+## UC11 – Migrazione Schema Automatica
+**Priorità:** Core  
+**Attori:** Sistema  
+**Precondizioni:** Aggiornamento app  
+**Flusso principale:**
+1. All’avvio, sistema rileva versione DB precedente.
+2. Applica script migration incrementale.
+3. Backup automatico prima della migration.
+**Flussi alternativi:** Migration fallita → rollback.  
+**Dati coinvolti:** Tutte le entità  
+**Acceptance criteria:** Nessuna perdita dati tra versioni.
+
+---
+
+## UC12 – Audit Trail & Log Modifiche
+**Priorità:** Core  
+**Attori:** Sistema / Datore  
+**Precondizioni:** Dati presenti  
+**Flusso principale:**
+1. Ogni modifica (ore, contratto, comunicazione) loggata con timestamp e autore.
+2. Utente può visualizzare cronologia modifiche.
+**Dati coinvolti:** `AuditLog` + entità di riferimento  
+**Acceptance criteria:** Cronologia consultabile per tutte le modifiche.
+
+---
+
+## UC13 – Supporto & Feedback In-App
+**Priorità:** Core  
+**Attori:** Datore  
+**Precondizioni:** App attiva  
+**Flusso principale:**
+1. Utente apre Impostazioni → Supporto.
+2. Legge FAQ o invia feedback/bug report.
+**Dati coinvolti:** `SupportMessage`  
+**Acceptance criteria:** Feedback salvato localmente, pronto per futuro invio/log.
 
 
-# Logiche Chiave
+---
 
-Calcolo busta paga: lordo, INPS, IRPEF, netto
-Modalità retribuzione: input semplificato → scenario riepilogativo
-Annualità: database tabelle normative aggiornabili per ogni anno
+## 9. Mappa di Navigazione  
 
-# Mappa di Navigazione
-🏠 Home
-  └─ (Day 0) Accesso rapido datore
-  └─ (Day 0) Accesso rapido collaboratore
-  └─ (Day N) Accesso rapido Busta Paga
-  └─ (Day N) Accesso rapido a inserimento ore
-  └─ (EoQ) Accesso rapido a Contributi
+# 🗺️ Mappa Screen PWA – Core MVP
 
-Menu Laterale
-  └─👤 Profilo Datore
-    └─ Dati anagrafici
-    └─ Dati fiscali
-  └─🧍 Collaboratore
-    └─ Inserimento dati
-    └─ Modalità retribuzione
-        └─ Netto desiderato
-        └─ Budget massimo
+## 🏠 Home / Prima Connessione
+- Benvenuto / Profilo breve dell'app
+- invito a registrare l'email
+- Bottone per skippare e andare in modalità offline completa
+- Mark registered se l'utente si registra
 
-  └─📅 Calendario
-    └─ Inserimento ore settimanale
-    └─ Ferie
+## 🏠 Home / Dashboard principale
+**Obiettivo:** Accesso rapido a funzioni core, riepiloghi e reminder
+- **Benvenuto** → UC0, UC1
+- **SE Day 0 allora solo wizard di configurazione**
+- **Riepilogo collaboratore attivo** → ore lavorate, ferie residue, stipendio stimato → UC2, UC3
+- **Shortcut principali (card o pulsanti):**
+  - Inserimento ore → UC2
+  - Visualizzazione busta paga → UC3
+  - Prospetto contributi → UC4
+- **Avvisi / Reminder** → ore non inserite, contributi in scadenza → UC9
+- **Accesso rapido collaboratore (Day 0 / onboarding)** → UC1
 
-  └─💰 Busta Paga
-    └─ Selezione mese
-    └─ Calcolo
+---
 
-  └─💰 Contributi
-    └─ Selezione quarto
-    └─ Calcolo
+## 📑 Menu laterale
+**Funzioni secondarie / gestione dati**
+- 👤 **Profilo Datore** → dati fiscali e anagrafici → UC0, UC10
+- 🧍 **Collaboratore**
+  - Dati anagrafici → UC1
+  - Contratto → UC1
+  - Modalità retribuzione → UC1
+- 📅 **Calendario**
+  - Inserimento ore giornaliere / settimanali → UC2
+  - Ferie e permessi → UC2
+  - Saldo ferie → UC2
+- 💰 **Busta Paga**
+  - Selezione mese → UC3
+  - Calcolo e visualizzazione dettagli → UC3
+- 💰 **Contributi**
+  - Selezione trimestre → UC4
+  - Calcolo prospetto INPS/IRPEF → UC4
+- ⚙️ **Impostazioni**
+  - Privacy → UC8
+  - Reset dati → UC6
+  - Export / Backup → UC6
+  - Suggerimenti / Supporto → UC13
 
-  └─⚙️ Impostazioni
-    └─ Privacy
-    └─ Reset dati
-    └─ Suggerisci una feature
+---
 
-  Bottom Buttons
-  └─🏠 Home
-  └─📅 Inserimento Ore
+## ⬇️ Bottom navigation
+**Accesso rapido alle funzioni più usate**
+- 🏠 Home / Dashboard → UC0, UC1, UC2, UC3, UC9
+- 📅 Inserimento Ore → UC2
+- 💰 Busta Paga / Prospetto Contributivo → UC3, UC4 (opzionale)
 
-  # NON OBIETTIVI (FUTURE ROADMAP)
+---
 
-- Documenti
-  - Lettera assunzione : Calcolo e Generazione PDF (premium)
-  - Busta paga : Calcolo e Generazione PDF (premium)
-  - CUA annuale : Calcolo e Generazione PDF (premium)
-  - Terminazione : Calcolo e Generazione PDF (premium)
-- Autenticazione email/password (con salvatggio sessione per accesso continuo)
-- Variazioni del contratto
-- Gestione multi-colf
-- Notifiche push
-- Social auth attivo
-- Multilingua
-- Gestione badanti/conviventi
-- Firma digitale
-- Archivio 24 mesi
-- Sincronizzazione cloud
-- Notifiche push per scadenze (esempio: versamento contributi, rinnovo contratto).
-- Alert per straordinari o ferie in eccesso.
-- Auto-aggiornamento dei contratti e retribuzioni in base ai rinnovi del CCNL.
-- Integrazione con pagamenti: Collegamento a sistemi di pagamento (esempio: PayPal, bonifico SEPA) per pagare direttamente dallo smartphone.
-- Dashboard e reportistica
-  - Dashboard mensile → Riepilogo di costi, ore, contributi e ferie.
-  - Previsione costi → Simulazione degli stipendi e contributi futuri in base a variazioni.
-  - Esportazione dati → In PDF o CSV per dichiarazione dei redditi o archiviazione.
-  
-- Variazioni contrattuali e cessazione rapporto
-  - Modifica orario e stipendio con effetto retroattivo o da data specifica.
-  - Wizard per il licenziamento → Calcolo automatico del preavviso e liquidazione finale (TFR, ferie non godute).
-  - Comunicazione automatizzata all'INPS (se possibile via API o generando il modulo precompilato).
+## 💡 Note UX / Dashboard
+- **Card dinamiche per collaboratore**: ore settimanali, stipendio netto, ferie residue → UC2, UC3
+- **Mini grafici / indicatori avanzamento**: barre per ore lavorate, ferie, budget massimo speso → UC2, UC3
+- **Shortcut dinamici** in base a stato utente:
+  - Day 0 → onboarding UC0, UC1
+  - Day N → inserimento ore UC2, visualizzazione busta paga UC3
+  - EoQ → prospetto contributi UC4
+- **Avvisi visivi / reminder integrati** → UC9
+- **Accesso rapido documenti PDF** → UC3, UC4
+
+
+
+---
+
+## 10. Flussi Utente  
+
+- **Profilo Datore** → inserimento dati anagrafici → salvataggio → modifica  
+- **Collaboratore** → inserimento dati → modalità retribuzione → scenario → conferma  
+- **Modalità Retribuzione**  
+  - Netto orario → calcolo scenario → conferma  
+  - Budget orario → calcolo scenario → conferma  
+  - Lordo orario → calcolo scenario → conferma  
+- **Inserimento ore** → selezione settimana → inserimento → salvataggio  
+- **Busta paga** → selezione mese → calcolo → visualizzazione  
+- **Annualità normativa** → aggiornamento tabelle → calcoli aggiornati → notifica utente  
+
+---
+
+## 11. NON OBIETTIVI (Future Roadmap)  
+
+### Documenti (Premium)  
+- Generazione PDF: Lettera assunzione, Busta paga, CUA annuale, Terminazione  
+
+### Contratti e gestione multipla  
+- Multi-colf  
+- Variazioni contratto retroattive o con data specifica  
+- Licenziamento con wizard (preavviso, TFR, ferie residue)  
+
+### Automazione & notifiche  
+- Push notification (scadenze contributi, rinnovi contratto, ferie eccessive)  
+- Auto-aggiornamento CCNL  
+
+### Integrazioni  
+- Pagamenti diretti (PayPal, SEPA)  
+- Social login, multilingua, firma digitale  
+
+### Archiviazione & reportistica  
+- Archivio 24 mesi  
+- Dashboard costi mensili, simulazioni future  
+- Export PDF/CSV  
+
+### Cloud & Sync  
+- Sincronizzazione cloud  
+- Accesso multi-device  
