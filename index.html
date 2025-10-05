@@ -69,33 +69,59 @@
                         <ons-list>
                             <ons-list-header>Menu</ons-list-header>
                             <ons-list-item tappable onclick="switchTabByLabel('Home')">
-                                <ons-icon icon="ion-ios-home"></ons-icon> Home
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-home"></ons-icon>
+                                    <span class="menu-label">Home</span>
+                                </div>
                             </ons-list-item>
 
                             <ons-list-item tappable onclick="switchTabByLabel('Datore')">
-                                <ons-icon icon="ion-ios-person"></ons-icon> Profilo Datore
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-person"></ons-icon>
+                                    <span class="menu-label">Profilo Datore</span>
+                                </div>
                             </ons-list-item>
 
                             <ons-list-item tappable onclick="switchTabByLabel('Collaboratore')">
-                                <ons-icon icon="ion-ios-people"></ons-icon> Collaboratore
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-people"></ons-icon>
+                                    <span class="menu-label">Collaboratore</span>
+                                </div>
                             </ons-list-item>
 
                             <ons-list-item tappable onclick="switchTabByLabel('Calendario')">
-                                <ons-icon icon="ion-ios-calendar"></ons-icon> Calendario
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-calendar"></ons-icon>
+                                    <span class="menu-label">Calendario</span>
+                                </div>
                             </ons-list-item>
 
                             <ons-list-item tappable onclick="switchTabByLabel('Busta Paga')">
-                                <ons-icon icon="ion-ios-cash"></ons-icon> Busta Paga
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-cash"></ons-icon>
+                                    <span class="menu-label">Busta Paga</span>
+                                </div>
                             </ons-list-item>
 
                             <ons-list-item tappable onclick="switchTabByLabel('Contributi')">
-                                <ons-icon icon="ion-ios-trending-up"></ons-icon> Contributi
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-trending-up"></ons-icon>
+                                    <span class="menu-label">Contributi</span>
+                                </div>
                             </ons-list-item>
 
                             <ons-list-item tappable onclick="switchTabByLabel('Impostazioni')">
-                                <ons-icon icon="ion-ios-settings"></ons-icon> Impostazioni
+                                <div class="center list-item__center">
+                                    <ons-icon icon="ion-ios-settings"></ons-icon>
+                                    <span class="menu-label">Impostazioni</span>
+                                </div>
                             </ons-list-item>
                         </ons-list>
+                        </ons-list>
+                        <div class="menu-footer">
+                            <div class="menu-footer__version">v1.0.0</div>
+                            <div class="menu-footer__info">OK Colf Express</div>
+                        </div>
                     </ons-page>
                 </ons-splitter-side>
 
@@ -204,5 +230,7 @@
         });
     </script>
 </body>
+
+
 
 </html>

@@ -85,92 +85,145 @@ ons-page {
 /* ========================================
    MENU LATERALE
    ======================================== */
-.side-menu {
-  background: var(--white) !important;
-  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.1);
+/* ========================================
+   MENU LATERALE
+   ======================================== */
+
+/* Sfondo CREMA menu */
+html .side-menu {
+  background: #FAF7F2 !important;
+  overflow-x: hidden !important;
 }
 
-.side-menu .page__background {
-  background: var(--white) !important;
+html .side-menu .page__background {
+  background: #FAF7F2 !important;
 }
 
-.side-menu ons-page {
-  background: var(--white) !important;
+html .side-menu ons-page {
+  background: #FAF7F2 !important;
 }
 
-.side-menu .page__content {
-  background: var(--white) !important;
-  padding: 0;
+html .side-menu .page__content {
+  background: #FAF7F2 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
 }
 
-.side-menu ons-list {
-  background: var(--white) !important;
-  background-color: var(--white) !important;
+html .side-menu ons-list {
+  background: #FAF7F2 !important;
+  background-color: #FAF7F2 !important;
 }
 
-.side-menu ons-list-header {
-  background: var(--primary-green) !important;
-  color: var(--white) !important;
+/* Header verde */
+html .side-menu ons-list-header {
+  background: #007A5E !important;
+  color: #FFFFFF !important;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  padding: 16px 12px;
-  border: none;
-}
-
-.side-menu ons-list-item {
   padding: 14px 16px !important;
-  margin: 4px 8px;
-  color: var(--text-dark) !important;
+  border: none !important;
+  margin: 0 0 8px 0 !important;
+}
+
+/* list-item__center senza padding */
+html .side-menu .list-item__center {
+  background: none !important;
+  background-image: none !important;
+  border: none !important;
+  padding: 0 !important;
+  min-height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Voci del menu - CARD BIANCHE */
+html .side-menu ons-list-item {
+  padding: 12px 16px !important;
+  margin: 4px 10px !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #333333 !important;
+  background: #FFFFFF !important;
+  border: none !important;
+  border-left: 3px solid #007A5E !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  cursor: pointer !important;
+  transition: all 0.25s ease !important;
+  min-height: 48px !important;
+}
+
+/* Hover voci */
+html .side-menu ons-list-item:hover {
+  background: #FFFFFF !important;
+  border-left-color: #007A5E !important;
+  box-shadow: 0 2px 8px rgba(0, 122, 94, 0.15) !important;
+  transform: translateY(-1px) translateX(2px);
+}
+
+/* Icone circolari */
+html .side-menu ons-list-item ons-icon {
+  flex-shrink: 0 !important;
+  color: white !important;
+  font-size: 17px !important;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  background: #007A5E !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: 0 2px 4px rgba(0, 122, 94, 0.25);
+  transition: all 0.25s ease !important;
+}
+
+/* Hover icone */
+html .side-menu ons-list-item:hover ons-icon {
+  transform: scale(1.05);
+  box-shadow: 0 3px 6px rgba(0, 122, 94, 0.35);
+  background: #005A45 !important;
+}
+
+/* Spaziatura testo menu */
+html .side-menu .menu-label {
+  margin-left: 12px;
+  font-size: 15px;
   font-weight: 500;
-  transition: var(--transition);
-  border-left: 3px solid transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  border-bottom: none !important;
-  background: var(--white) !important;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  color: #333333;
 }
 
-/* Stile icone Feather nel menu */
-.side-menu ons-list-item svg {
-  width: 20px;
-  height: 20px;
-  color: var(--primary-green);
-  stroke-width: 2;
-  transition: var(--transition);
+html .side-menu .menu-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: rgba(0, 122, 94, 0.03);
+  border-top: 1px solid rgba(0, 122, 94, 0.1);
+  text-align: center;
+  font-size: 12px;
+  color: #666666;
 }
 
-/* Stile icone Ionicons nel menu */
-.side-menu ons-list-item ons-icon {
-  color: var(--primary-green);
-  font-size: 20px;
-  margin-right: 12px;
-  transition: var(--transition);
+html .side-menu .menu-footer__version {
+  font-weight: 600;
+  color: #007A5E;
+  margin-bottom: 4px;
 }
 
-.side-menu ons-list-item:hover {
-  background: var(--secondary-cream) !important;
-  border-left-color: var(--primary-green);
-  transform: translateX(2px);
-}
-
-.side-menu ons-list-item:active {
-  background: var(--accent-gold-light) !important;
-  border-left-color: var(--accent-gold);
-}
-
-/* Rimuovi tutte le linee di separazione nel menu */
-.side-menu .list-item__line-height {
-  border-bottom: none !important;
-}
-
-.side-menu .list-item {
-  border-bottom: none !important;
+html .side-menu .menu-footer__info {
+  font-size: 11px;
+  color: #999999;
 }
 
 /* ========================================
