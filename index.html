@@ -50,8 +50,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap"
         rel="stylesheet">
-    <!-- (opzionale) Icon set such as Feather/Lucide via CDN or inline SVG -->
-    <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
 </head>
 
@@ -70,19 +68,33 @@
                     <ons-page>
                         <ons-list>
                             <ons-list-header>Menu</ons-list-header>
-                            <ons-list-item tappable onclick="switchTabByLabel('Home')">🏠 Home</ons-list-item>
-                            <ons-list-item tappable onclick="switchTabByLabel('Datore')">👤 Profilo
-                                Datore</ons-list-item>
-                            <ons-list-item tappable onclick="switchTabByLabel('Collaboratore')">🧍
-                                Collaboratore</ons-list-item>
-                            <ons-list-item tappable onclick="switchTabByLabel('Calendario')">📅
-                                Calendario</ons-list-item>
-                            <ons-list-item tappable onclick="switchTabByLabel('Busta Paga')">💰 Busta
-                                Paga</ons-list-item>
-                            <ons-list-item tappable onclick="switchTabByLabel('Contributi')">💰
-                                Contributi</ons-list-item>
-                            <ons-list-item tappable onclick="switchTabByLabel('Impostazioni')">⚙️
-                                Impostazioni</ons-list-item>
+                            <ons-list-item tappable onclick="switchTabByLabel('Home')">
+                                <ons-icon icon="ion-ios-home"></ons-icon> Home
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="switchTabByLabel('Datore')">
+                                <ons-icon icon="ion-ios-person"></ons-icon> Profilo Datore
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="switchTabByLabel('Collaboratore')">
+                                <ons-icon icon="ion-ios-people"></ons-icon> Collaboratore
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="switchTabByLabel('Calendario')">
+                                <ons-icon icon="ion-ios-calendar"></ons-icon> Calendario
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="switchTabByLabel('Busta Paga')">
+                                <ons-icon icon="ion-ios-cash"></ons-icon> Busta Paga
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="switchTabByLabel('Contributi')">
+                                <ons-icon icon="ion-ios-trending-up"></ons-icon> Contributi
+                            </ons-list-item>
+
+                            <ons-list-item tappable onclick="switchTabByLabel('Impostazioni')">
+                                <ons-icon icon="ion-ios-settings"></ons-icon> Impostazioni
+                            </ons-list-item>
                         </ons-list>
                     </ons-page>
                 </ons-splitter-side>
@@ -123,22 +135,30 @@
     </template>
     <template id="home-html">
         <ons-page>
+        <ons-card onclick="switchTabByLabel('Collaboratore')">
+            <div class="shortcut-title">
+                <ons-icon icon="ion-ios-person-add"></ons-icon>
+                Aggiungi Collaboratore
+            </div>
+            <div class="shortcut-desc">Configura un nuovo contratto</div>
+        </ons-card>
 
+        <ons-card onclick="switchTabByLabel('Calendario')">
+            <div class="shortcut-title">
+                <ons-icon icon="ion-ios-time"></ons-icon>
+                Inserisci Ore
+            </div>
+            <div class="shortcut-desc">Registra ore e assenze dal calendario</div>
+        </ons-card>
 
-            <ons-card>
-                <div class="shortcut-title">➕ Aggiungi Collaboratore</div>
-                <div class="shortcut-desc">Configura un nuovo contratto</div>
-            </ons-card>
+        <ons-card onclick="switchTabByLabel('Contributi')">
+            <div class="shortcut-title">
+                <ons-icon icon="ion-ios-stats"></ons-icon>
+                Contributi
+            </div>
+            <div class="shortcut-desc">Genera prospetto INPS/IRPEF</div>
+        </ons-card>
 
-            <ons-card>
-                <div class="shortcut-title">🗓️ Inserisci Ore</div>
-                <div class="shortcut-desc">Registra ore e assenze dal calendario</div>
-            </ons-card>
-
-            <ons-card>
-                <div class="shortcut-title">📊 Contributi</div>
-                <div class="shortcut-desc">Genera prospetto INPS/IRPEF</div>
-            </ons-card>
         </ons-page>
     </template>
 
@@ -166,6 +186,22 @@
         window.addEventListener('online', () => { updateStatus(); triggerSync(); });
         window.addEventListener('offline', updateStatus);
         updateStatus();
+    </script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        // Inizializza Feather quando la pagina è pronta
+        document.addEventListener('init', function (event) {
+            if (feather) {
+                feather.replace();
+            }
+        });
+
+        // Ri-inizializza dopo ogni cambio pagina
+        document.addEventListener('show', function (event) {
+            if (feather) {
+                feather.replace();
+            }
+        });
     </script>
 </body>
 

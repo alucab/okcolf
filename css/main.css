@@ -150,6 +150,13 @@ h1, h2, h3, h4, h5, h6,
       font-weight: 500;
       letter-spacing: -0.02em;
 }
+
+.side-menu ons-list-item ons-icon {
+  color: var(--primary-green);
+  font-size: 20px;
+  margin-right: 12px;
+  transition: var(--transition);
+}
  
 
 /* ========================================
@@ -203,6 +210,11 @@ ons-card:nth-child(2) {
 
 ons-card:nth-child(3) {
   border-left-color: var(--primary-green);
+}
+
+.shortcut-title ons-icon {
+  color: var(--primary-green);
+  font-size: 24px;
 }
 
 .shortcut-title {
