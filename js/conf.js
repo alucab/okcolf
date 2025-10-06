@@ -28,3 +28,40 @@ $d.on('init', function(event) {
 $d.on('DOMContentLoaded', () => {
     ons.ready(initApp);
 });
+
+$d.on('alpine:init', () => {
+  Alpine.data('appState', () => ({
+    activePage: 'dashboard',
+    isEmployerConfigured: false,
+    isWorkerConfigured: false,
+    isContractConfigured: false,
+    isUserAnonymous: true,
+    isSocialSecurityDeadlinePassed: false,
+
+
+    async init() {
+      await db.open();
+      const workers = await db.workers.toArray();
+      if (workers.length) this.activeWorker = workers[0];
+      this.refreshDashboard();
+    },
+
+    async refreshDashboard() {
+      if (!this.activeWorker) return;
+      const sessions = await db.work_sessions
+        .where('worker_id').equals(this.activeWorker.id)
+        .toArray();
+      this.workSessions = sessions;
+      this.weeklyHours = sessions
+        .filter(s => this.isThisWeek(s.date))
+        .reduce((acc, s) => acc + s.hours_worked, 0);
+    },
+
+    isThisWeek(dateStr) {
+      const d = new Date(dateStr);
+      const now = new Date();
+      const week = 1000 * 60 * 60 * 24 * 7;
+      return now - d < week;
+    }
+  }));
+});
