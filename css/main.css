@@ -225,6 +225,22 @@ html .side-menu .menu-footer__info {
   color: #999999;
 }
 
+.menu-footer__connection {
+  display: flex;               /* enable flex layout */
+  align-items: center;         /* vertical centering of icon + text */
+  justify-content: center;     /* horizontal centering of the group */
+  gap: 4px;                    /* spacing between icon and text */
+}
+
+.menu-footer__connection ons-icon {
+  font-size: 1.4em;
+  vertical-align: middle;      /* optional, extra safeguard */
+}
+
+.online-icon { color: green; }
+.offline-icon {   color: #e67e22; /* warm orange tone, softer than red */
+  opacity: 0.8;   /* slightly toned down */ }
+
 /* ========================================
    PAGINA PRINCIPALE
    ======================================== */

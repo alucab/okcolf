@@ -52,7 +52,7 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.15/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js" defer></script>
 
-// Order of initialization is important!
+    // Order of initialization is important!
 
     <script src="js/utils.js"></script>
     <script src="js/db.js" defer></script>
@@ -65,7 +65,7 @@
     <script src="js/app.js" defer></script>
 </head>
 
-<body>
+<body x-data>
     <ons-navigator id="myNavigator" page="splitter.html">
     </ons-navigator>
 
@@ -131,8 +131,16 @@
                         </ons-list>
                         </ons-list>
                         <div class="menu-footer">
-                            <div class="menu-footer__info">OK Colf Express</div>
+
                             <div class="menu-footer__version">v1.0.0</div>
+                            <div class="menu-footer__connection">
+                                <!-- Onsen icon reacts to store -->
+                                <ons-icon
+                                    :icon="$store.appState?.isApplicationConnected ? 'ion-ios-wifi' : 'ion-ios-close-circle'"
+                                    :class="$store.appState?.isApplicationConnected ? 'online-icon' : 'offline-icon'">
+                                </ons-icon>
+                                <span x-text="$store.appState?.isApplicationConnected ? 'Online' : 'Offline'"></span>
+                            </div>
 
                         </div>
                     </ons-page>
@@ -211,7 +219,7 @@
                     console.log('✅ Service Worker registered');
 
                     //Listen for messages from the SW (e.g., NEW_VERSION_AVAILABLE)
-                    $on(navigator.serviceWorker,'message', event => {
+                    $on(navigator.serviceWorker, 'message', event => {
                         if (event.data?.type === 'NEW_VERSION_AVAILABLE') {
                             console.warn('⚡ New version detected, refreshing app...');
                             window.location.reload(); // triggers new app + DB migration
@@ -219,7 +227,7 @@
                     });
 
                     //Optional: detect controller changes (new SW takes control)
-                    $on(navigator.serviceWorker,'controllerchange', () => {
+                    $on(navigator.serviceWorker, 'controllerchange', () => {
                         console.log('🔁 Controller changed → refreshing app');
                         window.location.reload();
                     });
