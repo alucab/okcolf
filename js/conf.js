@@ -9,17 +9,22 @@
 
 // App logic.
 window.myApp = {};
+window.myApp.conf = {};
 
-document.addEventListener('init', function(event) {
+$w.on('online', () => { updateStatus(); triggerSync();addLog('online', 'Connessione ripristinata') });
+$w.on('offline', () => { updateStatus();addLog('online', 'Connessione persa')});
+        
+
+
+$d.on('init', function(event) {
   var page = event.target;
 
   // Each page calls its own initialization controller.
-
-
   // Fill the lists with initial data when the pages we need are ready.
   // This only happens once at the beginning of the app.
 
 });
 
-
-window.myApp.conf = {};
+$d.on('DOMContentLoaded', () => {
+    ons.ready(initApp);
+});

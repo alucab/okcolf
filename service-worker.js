@@ -16,11 +16,9 @@ const coreAssets = [
   'js/services.js',
   'js/controllers.js',
   'js/conf.js',
-  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js',
+  'js/utils.js',
   'https://unpkg.com/onsenui/css/onsenui.css',
   'https://unpkg.com/onsenui/css/onsen-css-components.min.css',
-  'https://unpkg.com/ionicons@4.6.3/dist/css/ionicons.min.css',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap',
   'https://unpkg.com/onsenui/js/onsenui.min.js'
 ];
 /* from manifest.json*/
@@ -29,7 +27,11 @@ const staticAssets = [
   'assets/maskable_icon_x512.png',
   'assets/apple-touch-icon.png',
   'assets/maskable_icon.png',
-  'assets/share.png'
+  'assets/share.png',
+  'https://cdn.jsdelivr.net/npm/alpinejs@3.15/dist/cdn.min.js',
+  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js',
+  'https://unpkg.com/ionicons@4.6.3/dist/css/ionicons.min.css',
+  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap'
 ];
 
 const networkFirstWhitelist = [
@@ -42,11 +44,10 @@ const networkFirstWhitelist = [
   'js/services.js',
   'js/controllers.js',
   'js/conf.js',
-  'https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js',
+  'js/utils.js',
+
   'https://unpkg.com/onsenui/css/onsenui.css',
   'https://unpkg.com/onsenui/css/onsen-css-components.min.css',
-  'https://unpkg.com/ionicons@4.6.3/dist/css/ionicons.min.css',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap',
   'https://unpkg.com/onsenui/js/onsenui.min.js'
 ];
 

@@ -2,8 +2,6 @@
 <html lang="it">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Charset & viewport -->
     <meta charset="UTF-8">
@@ -14,10 +12,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <!--meta name="apple-mobile-web-app-capable" content="yes"-->
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!--meta name="apple-mobile-web-app-status-bar-style" content="default"-->
 
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
     <link rel="mask-icon" href="assets/maskable_icon.png" color="#2b3e50">
 
@@ -49,7 +47,17 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap"
         rel="stylesheet">
-    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.15/dist/cdn.min.js" defer></script>
+    <script src="js/utils.js"></script>
+    <script src="js/conf.js"></script>
+    <script src="js/db.js" defer></script>
+    <script src="js/log.js" defer></script>
+    <script src="js/sync.js" defer></script>
+    <script src="js/services.js" defer></script>
+    <script src="js/controllers.js" defer></script>
+    <script src="js/app.js" defer></script>
 </head>
 
 <body>
@@ -188,14 +196,7 @@
         </ons-page>
     </template>
 
-    <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js"></script>
-    <script src="js/conf.js"></script>
-    <script src="js/db.js"></script>
-    <script src="js/log.js"></script>
-    <script src="js/sync.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/app.js"></script>
+
 
     <script>
         if ('serviceWorker' in navigator) {
@@ -204,31 +205,22 @@
                 .then(registration => {
                     console.log('✅ Service Worker registered');
 
-                    // 🔹 Listen for messages from the SW (e.g., NEW_VERSION_AVAILABLE)
-                    navigator.serviceWorker.addEventListener('message', event => {
+                    //Listen for messages from the SW (e.g., NEW_VERSION_AVAILABLE)
+                    $on(navigator.serviceWorker,'message', event => {
                         if (event.data?.type === 'NEW_VERSION_AVAILABLE') {
                             console.warn('⚡ New version detected, refreshing app...');
                             window.location.reload(); // triggers new app + DB migration
                         }
                     });
 
-                    // 🔹 Optional: detect controller changes (new SW takes control)
-                    navigator.serviceWorker.addEventListener('controllerchange', () => {
+                    //Optional: detect controller changes (new SW takes control)
+                    $on(navigator.serviceWorker,'controllerchange', () => {
                         console.log('🔁 Controller changed → refreshing app');
                         window.location.reload();
                     });
                 })
                 .catch(err => console.error('❌ Service Worker registration failed:', err));
         }
-
-        function updateStatus() {
-            /*document.getElementById('status').textContent = navigator.onLine
-                ? 'Online'
-                : 'Offline';*/
-        }
-        window.addEventListener('online', () => { updateStatus(); triggerSync(); });
-        window.addEventListener('offline', updateStatus);
-        updateStatus();
     </script>
 
 </body>
