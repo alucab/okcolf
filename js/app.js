@@ -1,15 +1,8 @@
 
 
 function initApp() {
-  updateConnectionStatus();
   addSampleWorker();
   listWorkers();
-}
-
-function updateConnectionStatus() {
-  /*document.getElementById('status').textContent = navigator.onLine
-      ? 'Online'
-      : 'Offline';*/
 }
 
 async function addSampleWorker() {
@@ -34,13 +27,13 @@ async function deleteWorkers() {
 async function listWorkers() {
   const workers = await db.workers.toArray();
   if (workers.length === 0) {
-    document.getElementById('workers-list').textContent = 'Nessun worker trovato.';
+   // document.getElementById('workers-list').textContent = 'Nessun worker trovato.';
     await addLog('data', 'Nessun worker trovato');
   } else if (workers.length < 10) {
     await addLog('data', 'Workers trovati: ' + workers.length);
-    document.getElementById('workers-list').textContent = JSON.stringify(workers, null, 2);
+  //  document.getElementById('workers-list').textContent = JSON.stringify(workers, null, 2);
   } else {
-    document.getElementById('workers-list').textContent = 'Troppi workers per essere mostrati (' + workers.length + ').';
+  //  document.getElementById('workers-list').textContent = 'Troppi workers per essere mostrati (' + workers.length + ').';
     await deleteWorkers();
   }
 

@@ -2,12 +2,12 @@
  * App Services. This contains the logic of the application organised in modules/objects. *
  ***********************************************************************************/
 
-window.myApp.services = {
+
 
   /////////////////
   // Task Service //
   /////////////////
-  tasks: {
+
 
     // Creates a new task and attaches it to the pending task list.
 
@@ -17,12 +17,12 @@ window.myApp.services = {
 
     // Deletes a task item and its listeners.
 
-  },
+
 
   /////////////////////
   // Category Service //
   ////////////////////
-  categories: {
+
 
     // Creates a new category and attaches it to the custom category list.
 
@@ -44,12 +44,12 @@ window.myApp.services = {
 
     // Transforms a category name into a valid id.
 
-  },
+  
 
   //////////////////////
   // Animation Service //
   /////////////////////
-  animators: {
+
 
     // Swipe animation for task completion.
 
@@ -57,7 +57,7 @@ window.myApp.services = {
     // Remove animation for task deletion.
 
     
-  },
+  
 
 
-};
+

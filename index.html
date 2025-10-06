@@ -47,12 +47,17 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600&display=swap"
         rel="stylesheet">
-    <script src="https://unpkg.com/onsenui/js/onsenui.min.js" defer></script>
+
     <script src="https://cdn.jsdelivr.net/npm/dexie@3.2.4/dist/dexie.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.15/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js" defer></script>
+
+// Order of initialization is important!
+
     <script src="js/utils.js"></script>
-    <script src="js/conf.js"></script>
     <script src="js/db.js" defer></script>
+    <script src="js/conf.js" defer></script>
+
     <script src="js/log.js" defer></script>
     <script src="js/sync.js" defer></script>
     <script src="js/services.js" defer></script>

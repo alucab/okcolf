@@ -155,5 +155,7 @@ const FormStore = {
 /* ===================================
  *  EXPORT GLOBALE
  * =================================== */
-window.AppDB = { KV, FormStore };
+window.db = db
+window.KV = KV
+window.FormStore = FormStore;
 

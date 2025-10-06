@@ -19,7 +19,7 @@ function switchTabByLabel(label) {
 }
 
 
-window.myApp.controllers = {
+
 
   //////////////////////////
   // Tabbar Page Controller //
@@ -39,4 +39,4 @@ window.myApp.controllers = {
   ////////////////////////////////
   // Details Task Page Controller //
   ///////////////////////////////
-}
+
