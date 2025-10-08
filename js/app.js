@@ -1,8 +1,26 @@
-
-
-function initApp() {
-  addSampleWorker();
-  listWorkers();
+async function initApp() {
+  // Check if user has a session
+  const session = await AuthService.checkSession();
+  
+  const navigator = document.querySelector('#myNavigator');
+  
+  if (!session) {
+    // New user → show welcome page
+    navigator.resetToPage('html/welcome.html');
+  } else {
+    // Existing user → show main app
+    navigator.resetToPage('splitter.html');
+    
+    // Update appState
+    if (window.Alpine?.store('appState')) {
+      Alpine.store('appState').isUserAnonymous = (session.mode === 'anon');
+      Alpine.store('appState').userEmail = session.email;
+    }
+    
+    // Continue with existing initialization
+    addSampleWorker();
+    listWorkers();
+  }
 }
 
 async function addSampleWorker() {
@@ -27,20 +45,11 @@ async function deleteWorkers() {
 async function listWorkers() {
   const workers = await db.workers.toArray();
   if (workers.length === 0) {
-   // document.getElementById('workers-list').textContent = 'Nessun worker trovato.';
     await addLog('data', 'Nessun worker trovato');
   } else if (workers.length < 10) {
     await addLog('data', 'Workers trovati: ' + workers.length);
-  //  document.getElementById('workers-list').textContent = JSON.stringify(workers, null, 2);
   } else {
-  //  document.getElementById('workers-list').textContent = 'Troppi workers per essere mostrati (' + workers.length + ').';
     await deleteWorkers();
   }
-
   return;
-
 }
-
-
-
-

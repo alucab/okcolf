@@ -12,6 +12,7 @@ const appState = {
   isWorkerConfigured: false,
   isContractConfigured: false,
   isUserAnonymous: true,
+  userEmail: '',
   isSocialSecurityDeadlinePassed: false,
   isApplicationConnected: navigator.onLine,
   workers: [],

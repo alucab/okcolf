@@ -1,0 +1,145 @@
+<!-- html/welcome.html -->
+
+<ons-page class="welcome-page">
+    <div class="welcome-splash" x-data="welcomeData()">
+
+        <!-- Header with icon inline -->
+        <div class="welcome-header">
+            <ons-icon icon="ion-ios-briefcase" class="welcome-icon"></ons-icon>
+            <h1 class="welcome-title">OK Colf Express</h1>
+        </div>
+        <p class="welcome-subtitle">Gestisci ore, paghe e contributi domestici</p>
+
+        <!-- Info Box -->
+        <div class="welcome-info">
+            <p>Puoi usare l'app offline o registrarti con la tua email per salvare i dati nel cloud.</p>
+        </div>
+
+        <!-- Step 1: Email Form -->
+        <div class="welcome-form" x-show="step === 1" x-transition>
+            <ons-input x-model="name" placeholder="Nome (opzionale)" class="welcome-input" :disabled="loading">
+            </ons-input>
+
+            <ons-input x-model="email" type="email" placeholder="Email" class="welcome-input" :disabled="loading">
+            </ons-input>
+
+            <p class="error-message" x-show="error" x-text="error"></p>
+
+            <ons-button modifier="large" class="welcome-button" @click="sendCode()" :disabled="loading || !email">
+                <span x-show="!loading">Invia Codice</span>
+                <span x-show="loading">Invio...</span>
+            </ons-button>
+        </div>
+
+        <!-- Step 2: OTP Form -->
+        <div class="welcome-form" x-show="step === 2" x-transition>
+            <p class="otp-instruction">Inserisci il codice inviato a <strong x-text="email"></strong></p>
+
+            <ons-input x-model="otp" type="tel" placeholder="000000" maxlength="6" class="welcome-input otp-input"
+                :disabled="loading">
+            </ons-input>
+
+            <p class="error-message" x-show="error" x-text="error"></p>
+
+            <ons-button modifier="large" class="welcome-button" @click="confirmOTP()"
+                :disabled="loading || otp.length !== 6">
+                <span x-show="!loading">Conferma</span>
+                <span x-show="loading">Verifica...</span>
+            </ons-button>
+
+            <button class="link-button" @click="step = 1; otp = ''; error = ''">
+                ← Torna indietro
+            </button>
+        </div>
+
+        <!-- Anonymous Mode Link -->
+        <div class="welcome-footer" x-show="step === 1">
+            <button class="link-button" @click="skipEmail()">
+                Continua senza email
+            </button>
+        </div>
+
+    </div>
+
+
+
+    <script>
+        function welcomeData() {
+            return {
+                step: 1,
+                name: '',
+                email: '',
+                otp: '',
+                loading: false,
+                error: '',
+
+                async sendCode() {
+                    this.error = '';
+
+                    // Validate email
+                    if (!this.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+                        this.error = 'Inserisci un\'email valida';
+                        return;
+                    }
+
+                    this.loading = true;
+
+                    try {
+                        const result = await AuthService.sendOTP(this.email);
+                        if (result.success) {
+                            this.step = 2;
+                            ons.notification.toast('Codice inviato! (Mock: 123456)', { timeout: 3000 });
+                        }
+                    } catch (err) {
+                        this.error = 'Errore durante l\'invio. Riprova.';
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async confirmOTP() {
+                    this.error = '';
+                    this.loading = true;
+
+                    try {
+                        const result = await AuthService.verifyOTP(this.email, this.otp);
+
+                        if (result.success) {
+                            await AuthService.saveSession('email', this.email, true);
+                            ons.notification.toast('Registrazione completata!', { timeout: 2000 });
+
+                            setTimeout(() => {
+                                const navigator = document.querySelector('#myNavigator');
+                                navigator.resetToPage('splitter.html');
+                            }, 500);
+                        } else {
+                            this.error = result.error || 'Codice non valido';
+                        }
+                    } catch (err) {
+                        this.error = 'Errore durante la verifica. Riprova.';
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async skipEmail() {
+                    this.loading = true;
+
+                    try {
+                        await AuthService.saveSession('anon', '', false);
+                        ons.notification.toast('Modalità offline attivata', { timeout: 2000 });
+
+                        setTimeout(() => {
+                            const navigator = document.querySelector('#myNavigator');
+                            navigator.resetToPage('splitter.html');
+                        }, 500);
+                    } catch (err) {
+                        this.error = 'Errore. Riprova.';
+                        this.loading = false;
+                    }
+                }
+            };
+        }
+    </script>
+
+</ons-page>
