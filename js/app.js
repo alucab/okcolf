@@ -3,13 +3,13 @@ async function initApp() {
   const session = await AuthService.checkSession();
   
   const navigator = document.querySelector('#myNavigator');
-  
+
   if (!session) {
     // New user → show welcome page
     navigator.resetToPage('html/welcome.html');
   } else {
     // Existing user → show main app
-    navigator.resetToPage('splitter.html');
+    //navigator.resetToPage('splitter.html');
     
     // Update appState
     if (window.Alpine?.store('appState')) {
@@ -20,7 +20,8 @@ async function initApp() {
     // Continue with existing initialization
     addSampleWorker();
     listWorkers();
-  }
+  }  
+
 }
 
 async function addSampleWorker() {

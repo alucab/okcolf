@@ -38,23 +38,32 @@ $d.on('alpine:init', () => {
   console.log('Alpine:init fired but ignored');
 });
 
-$d.on('DOMContentLoaded', () => {
+$d.on('DOMContentLoaded', async () => {
   console.log('DOM fully loaded and parsed');
-  ons.ready(() => {
+
+  ons.ready(async () => {
     console.log('Onsen UI is ready');
-    initApp();
+
     if (window.Alpine && !Alpine.store('appState')) {
-      Alpine.store('appState', appState)
+      Alpine.store('appState', appState);
     }
-    // Listener globali dopo che Alpine e Onsen sono pronti
+
+    // Wait for initApp to finish
+    await initApp();
+
+    // Now safe to attach global listeners
     $w.on('online', () => Alpine.store('appState').setConnection(true));
     $w.on('offline', () => Alpine.store('appState').setConnection(false));
   });
 });
 
-/*['DOMContentLoaded', 'alpine:init', 'init', 'onsready'].forEach(ev => {
-  window.addEventListener(ev, () => console.log(`🔥 ${ev}`));
-});*/
+['DOMContentLoaded', 'alpine:init', 'init', 'onsready'].forEach(eventName => {
+  window.addEventListener(eventName, (ev) => {
+    console.log(`🔥 Event: ${ev.type}`);
+    console.log(`🔥 Target:`, ev.target);
+    //console.trace();
+  });
+});
 
 $d.on('init', function (event) {
 
