@@ -51,7 +51,7 @@ ons-page {
 }
 
 .page__content {
-  background: var(--secondary-cream) !important;
+  background: var(--secondary-cream) /*!important*/;
   padding: 16px;
 }
 
@@ -70,6 +70,17 @@ ons-page {
   font-weight: 600;
   font-size: 18px;
   letter-spacing: 0.5px;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 100% !important;
+}
+
+.main-toolbar .left,
+.main-toolbar .right {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
 }
 
 .main-toolbar .left ons-icon,
@@ -647,6 +658,7 @@ ons-card:nth-child(3) {
   body {
     background: var(--secondary-cream);
   }
+}
 /* ========================================
    WELCOME PAGE - REVISED
    ======================================== */
