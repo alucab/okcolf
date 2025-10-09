@@ -757,39 +757,52 @@ ons-card:nth-child(3) {
   margin-top: 8px;
 }
 
-/* Force single white background on inputs */
-ons-input.welcome-input,
+/* Wrapper ons-input */
+ons-input.welcome-input {
+  width: 100% !important;
+  border-radius: 10px !important;
+  background: white !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  transition: var(--transition) !important;
+  box-shadow: 0 0 0 0 rgba(201, 155, 43, 0) !important;
+}
+
+/* Focus sul wrapper */
+ons-input.welcome-input:focus-within {
+  box-shadow: 0 0 0 3px rgba(201, 155, 43, 0.4) !important;
+}
+
+/* Input interno */
 .welcome-input input,
 .welcome-input .text-input,
-.welcome-input .text-input--material,
-input.text-input,
-input.text-input--material {
+.welcome-input .text-input--material {
   width: 100% !important;
   border: none !important;
   border-radius: 10px !important;
-  padding: 16px !important;
+  padding: 28px !important;
   font-family: 'Poppins', sans-serif !important;
-  font-size: 15px !important;
+  font-size: 21px !important;
   font-weight: 500 !important;
-  transition: var(--transition) !important;
   background: white !important;
   background-color: white !important;
   background-image: none !important;
   color: var(--text-dark) !important;
   box-sizing: border-box !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  outline: none !important;
+  margin: 0 !important;
 }
 
+/* Rimuovi outline default sul focus interno */
 .welcome-input input:focus {
-  box-shadow: 0 0 0 3px rgba(201, 155, 43, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1) !important;
   outline: none !important;
-  background: white !important;
+  box-shadow: none !important;
 }
 
 /* Remove OnsenUI material underlines */
-.text-input--material__label,
-.text-input--material:before,
-.text-input--material:after {
+.welcome-input .text-input--material__label,
+.welcome-input .text-input--material:before,
+.welcome-input .text-input--material:after {
   display: none !important;
 }
 
