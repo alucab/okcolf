@@ -39,6 +39,7 @@
 - architettura
 - setup e sottosistemi vari
 
-## Backend
+## Backend OTP
 - passare da Goggle Apps Script a un backend piu serio
 - harfdening del GAS
+- salvare nome del utente
