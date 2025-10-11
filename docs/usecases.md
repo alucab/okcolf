@@ -1,7 +1,8 @@
 # Use Case – Fase 1 (AI-Friendly)
 
 ## UC1 – Onboarding rapido collaboratore
-- **Schermate:** 
+
+- **Schermate:**
   1. Spiegazione rapida (“Registra le ore del tuo collaboratore in pochi secondi al giorno”)  
   2. Inserimento collaboratore + ore/retribuzione  
   3. Riepilogo totale + messaggio soft “Vuoi salvare i dati e ricevere promemoria? → email opzionale”
@@ -18,7 +19,8 @@
 ---
 
 ## UC2 – Tracking ore giornaliere / settimanali
-- **Schermate:** 
+
+- **Schermate:**
   1. Inserimento ore giornaliere/settimanali  + marcatura giorni ferie e malattia
   2. Riepilogo totale mensile  
   3. Notifiche / reminder in-app
@@ -35,7 +37,8 @@
 ---
 
 ## UC3 – Schermata simulazione costi
-- **Schermate:** 
+
+- **Schermate:**
   1. Simulazione costi input ore/retribuzione/tipo collaboratore  
   2. Tooltip/info dettagliata sui contributi stimati  
   3. Popup CTA “Ricevi riepilogo via email”  
@@ -53,7 +56,8 @@
 ---
 
 ## UC4 – Export / Backup dati
-- **Schermate:** 
+
+- **Schermate:**
   1. Bottone “Esporta CSV/Excel”  
   2. Popup conferma export / inserimento email
 - **Attori:** Utente, App, Sistema Email
@@ -69,7 +73,8 @@
 ---
 
 ## UC5 – Reminder trimestrale simulato
-- **Schermate:** 
+
+- **Schermate:**
   1. Riepilogo trimestrale contributi stimati  
   2. Popup CTA “Ricevi promemoria via email”  
   3. Popup “Vuoi salvare dati sul cloud?”
@@ -86,7 +91,8 @@
 ---
 
 ## UC6 – Suggerisci nuova funzione
-- **Schermate:** 
+
+- **Schermate:**
   1. Popup campo testo libero descrizione feature  
   2. Checkbox “Posso contattarti via email”  
   3. Messaggio ringraziamento post-invio

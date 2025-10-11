@@ -9,7 +9,7 @@ async function initApp() {
     navigator.resetToPage('html/welcome.html');
   } else {
     // Existing user → show main app
-    //navigator.resetToPage('splitter.html');
+    navigator.resetToPage('splitter.html');
     
     // Update appState
     if (window.Alpine?.store('appState')) {
