@@ -105,3 +105,69 @@
 - **Obiettivo strategico:** Insight qualitativi, micro-email acquisition, engagement
 - **Priorità MVP:** Bassa
 - **Analytics:** Numero suggerimenti, % email, trend feature
+
+---
+
+Ecco lo use case completo nel formato che usi nel blueprint:
+
+---
+
+## UC7 – Privacy Mgmt per GDPR
+
+- **Schermate:**
+
+  1. Impostazioni → Privacy
+  2. Finestra “Informativa Privacy” (accordion espandibile)
+  3. Checkbox di consenso (Option C – GDPR Compliant)
+  4. Sezione per esportazione o cancellazione dati personali
+
+- **Attori:**
+  Datore (utente registrato o locale), Sistema
+
+- **Input:**
+
+  - Email utente
+  - Scelta checkbox di consenso (Option C)
+  - Eventuale richiesta di cancellazione o export dati
+
+- **Output:**
+
+  - Registrazione del consenso GDPR
+  - File JSON con dati utente (in caso di export)
+  - Cancellazione dati personali dal DB locale (in caso di delete)
+
+- **Trigger/Ganci:**
+
+  - Primo accesso dopo registrazione → richiesta consenso
+  - Accesso a Impostazioni → sezione Privacy
+  - Scadenza normativa / modifica informativa → richiesta nuovo consenso
+
+- **Precondizioni:**
+
+  - App installata e funzionante
+  - Utente registrato via email (UC0 completato)
+  - Versione aggiornata dell’informativa (Version 3 + Option C) disponibile
+
+- **Postcondizioni:**
+
+  - Consenso archiviato localmente nel DB (`kv.privacy_consent = true`, data e versione)
+  - Possibilità di revoca o cancellazione completa dei dati
+  - Audit log dell’azione salvato (`logs` table)
+
+- **Obiettivo strategico:**
+  Garantire piena conformità al GDPR (Art. 13 e 6), permettendo all’utente di:
+
+  - conoscere in modo trasparente le finalità del trattamento,
+  - acconsentire esplicitamente,
+  - esercitare i propri diritti (accesso, export, cancellazione).
+
+- **Priorità MVP:** Media (inclusa solo parte consenso per MVP; export/delete in UC8)
+
+- **Analytics:**
+
+  - % utenti che visualizzano l’informativa completa
+  - % che forniscono consenso GDPR (Option C)
+  - % che richiedono export o cancellazione
+  - Versione informativa attiva per ciascun consenso
+
+---

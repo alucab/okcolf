@@ -886,3 +886,109 @@ ons-input.welcome-input:focus-within {
   padding-top: 16px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* Privacy Notice Styles */
+.privacy-notice {
+  background: #f8f9fa;
+  border-left: 4px solid #667eea;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 20px 0;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.privacy-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #495057;
+  margin: 0 0 16px 0;
+  text-align: left;
+}
+
+.privacy-link {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.privacy-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.privacy-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.privacy-checkbox ons-checkbox {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.privacy-label {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #212529;
+  flex: 1;
+  text-align: left;
+}
+
+/* Error message styling */
+.error-message {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  color: #856404;
+  padding: 12px;
+  border-radius: 4px;
+  margin: 12px 0;
+  font-size: 14px;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 480px) {
+  .privacy-notice {
+    padding: 12px;
+    margin: 16px 0;
+  }
+  
+  .privacy-text,
+  .privacy-label {
+    font-size: 12px;
+  }
+}
+
+/* Disabled state */
+.privacy-checkbox:has(ons-checkbox[disabled]) {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Focus state for accessibility */
+.privacy-checkbox:focus-within .privacy-label {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+  border-radius: 2px;
+}

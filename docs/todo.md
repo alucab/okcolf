@@ -43,3 +43,4 @@
 - passare da Goggle Apps Script a un backend piu serio
 - harfdening del GAS
 - salvare nome del utente
+- question> come evitare che ci sblocchino l-applicazione da javascript

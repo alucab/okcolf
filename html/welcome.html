@@ -23,9 +23,27 @@
             <ons-input x-model="email" type="email" placeholder="Email" class="welcome-input" :disabled="loading">
             </ons-input>
 
+            <!-- Privacy Notice -->
+            <div class="privacy-notice">
+                <p class="privacy-text">
+                    Registrandoti accetti che il tuo indirizzo email venga salvato in modo sicuro su Google Sheets per l'autenticazione. 
+                    I dati non vengono condivisi con terzi. I codici OTP vengono eliminati dopo 24 ore. 
+                    Puoi richiedere la cancellazione in qualsiasi momento contattando 
+                    <a href="mailto:privacy@okcolf.it" class="privacy-link">privacy@okcolf.it</a>
+                </p>
+                
+                <label class="privacy-checkbox">
+                    <ons-checkbox x-model="privacyAccepted" :disabled="loading"></ons-checkbox>
+                    <span class="privacy-label">
+                        Acconsento al trattamento del mio indirizzo email secondo l'informativa privacy (Art. 6 GDPR)
+                    </span>
+                </label>
+            </div>
+
             <p class="error-message" x-show="error" x-text="error"></p>
 
-            <ons-button modifier="large" class="welcome-button" @click="sendCode()" :disabled="loading || !email">
+            <ons-button modifier="large" class="welcome-button" @click="sendCode()" 
+                :disabled="loading || !email || !privacyAccepted">
                 <span x-show="!loading">Invia Codice</span>
                 <span x-show="loading">Invio...</span>
             </ons-button>
@@ -70,6 +88,7 @@
                 name: '',
                 email: '',
                 otp: '',
+                privacyAccepted: false,
                 loading: false,
                 error: '',
 
@@ -82,13 +101,21 @@
                         return;
                     }
 
+                    // Validate privacy acceptance
+                    if (!this.privacyAccepted) {
+                        this.error = 'Devi accettare l\'informativa privacy per continuare';
+                        return;
+                    }
+
                     this.loading = true;
 
                     try {
                         const result = await AuthService.sendOTP(this.email);
                         if (result.success) {
                             this.step = 2;
-                            ons.notification.toast('Codice inviato! (Mock: 123456)', { timeout: 3000 });
+                            ons.notification.toast('Codice inviato! Controlla la tua email.', { timeout: 3000 });
+                        } else {
+                            this.error = result.message || 'Errore durante l\'invio. Riprova.';
                         }
                     } catch (err) {
                         this.error = 'Errore durante l\'invio. Riprova.';
@@ -113,7 +140,7 @@
                                 navigator.resetToPage('splitter.html');
                             }, 500);
                         } else {
-                            this.error = result.error || 'Codice non valido';
+                            this.error = result.message || result.error || 'Codice non valido';
                         }
                     } catch (err) {
                         this.error = 'Errore durante la verifica. Riprova.';

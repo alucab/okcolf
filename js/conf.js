@@ -5,6 +5,17 @@
  * the contract thresholds for hours worked organized per year
  ***********************************************************************/
 
+// Google Apps Script API Configuration
+const GAS_CONFIG = {
+  // Set this to your deployed Google Apps Script Web App URL
+  API_URL: '', // Example: 'https://script.google.com/macros/s/AKfycby.../exec'
+  
+  // Enable mock mode for development (bypasses real API calls)
+  USE_MOCK: true, // Set to false when GAS backend is deployed
+  
+  // Timeout for API requests (milliseconds)
+  TIMEOUT: 10000
+};
 
 const appState = {
   activePage: 'dashboard',
@@ -70,4 +81,3 @@ $d.on('init', function (event) {
   Alpine.store('appState')?.setPage(event.target);
 
 });
-
