@@ -9,7 +9,7 @@
 - [ ] add reset dati in Settings
 - [ ] aggiungere use case per update dell'applicazione
 - [ ] aggiungere use case per inserimento dell'email dai settings
-- [ ] aggiungere use case analytics
+- [x] aggiungere use case analytics
 
 ## Web
 
@@ -25,12 +25,8 @@
 ## App UX/Design
 
 - [ ] define colors for manifest  
-- [ ] define logo and icons  from manifest
+- [ ] define logo and icons from manifest
 - [ ] generare tutte le icone come da how-to-create-icons.md
-- [ ] rivedere design e scritte della pagina splash
-- [ ] rivedere designa colori delle input boxes della splash
-- [ ] Rivedere welcome per fare privacy che appare solo su click ora è brutta
-- [ ] complete privacy notice
 
 ## JS files
 
@@ -45,9 +41,17 @@
 - [ ] architettura
 - [ ] setup e sottosistemi vari
 
-## Backend OTP
+## UC0 Welcome e Backend OTP
 
-- [ ] passare da Goggle Apps Script a un backend piu serio
-- [ ] harfdening del GAS
+- [ ] Rivedere welcome per fare privacy che appare solo su click ora è brutta
+- [ ] complete privacy noticepassare da Goggle Apps Script a un backend piu serio
+- [ ] hardening del GAS
 - [ ] salvare nome del utente
 - [ ] question> come evitare che ci sblocchino l-applicazione da javascript
+- [ ] primo deployment del gs service
+- [ ] fare analisi del testing da fare
+- [ ] eseguire testing
+- [ ] retrospective con claude
+- [ ] merge della patch
+- [ ] rivedere design e scritte della pagina splash
+- [x] rivedere designa colori delle input boxes della splash
