@@ -3,7 +3,91 @@
  ***********************************************************************************/
 
 /***********************************************************************************
- * Auth Service - Session management with mocked email/OTP
+ * API Service - HTTP request handler with error handling and retry logic
+ ***********************************************************************************/
+
+const ApiService = {
+  /**
+   * Make HTTP request with timeout and error handling
+   * @param {string} url - Request URL
+   * @param {Object} options - Fetch options
+   * @returns {Promise<Object>} Response data
+   */
+  async request(url, options = {}) {
+    const timeout = GAS_CONFIG.TIMEOUT || 10000;
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeout);
+    
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+        headers: {
+          'Content-Type': 'application/json',
+          ...options.headers
+        }
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      return data;
+      
+    } catch (error) {
+      clearTimeout(timeoutId);
+      
+      if (error.name === 'AbortError') {
+        throw new Error('Request timeout - il server non risponde');
+      }
+      
+      if (!navigator.onLine) {
+        throw new Error('Nessuna connessione internet');
+      }
+      
+      throw error;
+    }
+  },
+  
+  /**
+   * Retry request with exponential backoff
+   * @param {Function} operation - Request function to retry
+   * @param {number} maxRetries - Maximum retry attempts
+   * @returns {Promise<Object>} Response data
+   */
+  async retry(operation, maxRetries = 3) {
+    let lastError;
+    
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        return await operation();
+      } catch (error) {
+        lastError = error;
+        
+        // Don't retry on client errors or offline
+        if (error.message.includes('400') || 
+            error.message.includes('404') ||
+            error.message.includes('internet')) {
+          throw error;
+        }
+        
+        if (attempt < maxRetries - 1) {
+          const delay = Math.pow(2, attempt) * 1000; // 1s, 2s, 4s
+          await new Promise(resolve => setTimeout(resolve, delay));
+        }
+      }
+    }
+    
+    throw lastError;
+  }
+};
+
+/***********************************************************************************
+ * Auth Service - Session management with real OTP backend
  ***********************************************************************************/
 
 const AuthService = {
@@ -60,97 +144,141 @@ const AuthService = {
   },
 
   /**
-   * Mock: Send OTP to email (simulated 1s delay)
-   * @param {string} email
-   * @returns {Promise<{success: boolean, code?: string}>}
+   * Send OTP to email (real backend or mock)
+   * @param {string} email - User email
+   * @returns {Promise<Object>} Response with success status
    */
   async sendOTP(email) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const mockCode = '123456'; // Mock OTP for testing
-        console.log(`📧 Mock OTP sent to ${email}: ${mockCode}`);
-        resolve({ success: true, code: mockCode });
-      }, 1000);
-    });
+    // Mock mode for development
+    if (GAS_CONFIG.USE_MOCK) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const mockCode = '123456';
+          console.log(`📧 Mock OTP sent to ${email}: ${mockCode}`);
+          resolve({ success: true, status: 'ok' });
+        }, 1000);
+      });
+    }
+    
+    // Real backend call
+    if (!GAS_CONFIG.API_URL) {
+      throw new Error('API_URL not configured');
+    }
+    
+    try {
+      const result = await ApiService.retry(async () => {
+        return await ApiService.request(`${GAS_CONFIG.API_URL}?path=send_otp`, {
+          method: 'POST',
+          body: JSON.stringify({ email })
+        });
+      });
+      
+      return result;
+      
+    } catch (error) {
+      console.error('sendOTP error:', error);
+      return {
+        success: false,
+        error: 'network_error',
+        message: this._getErrorMessage(error)
+      };
+    }
   },
 
   /**
-   * Mock: Verify OTP code (accepts any 6-digit code)
-   * @param {string} email
-   * @param {string} code
-   * @returns {Promise<{success: boolean, error?: string}>}
+   * Verify OTP code (real backend or mock)
+   * @param {string} email - User email
+   * @param {string} code - OTP code
+   * @returns {Promise<Object>} Response with verification result
    */
   async verifyOTP(email, code) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (!/^\d{6}$/.test(code)) {
-          resolve({ success: false, error: 'Codice deve essere 6 cifre' });
-        } else {
-          console.log(`✅ Mock OTP verified for ${email}`);
-          resolve({ success: true });
-        }
-      }, 500);
-    });
+    // Mock mode for development
+    if (GAS_CONFIG.USE_MOCK) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (!/^\d{6}$/.test(code)) {
+            resolve({ success: false, error: 'invalid_otp_format', message: 'Codice deve essere 6 cifre' });
+          } else {
+            console.log(`✅ Mock OTP verified for ${email}`);
+            resolve({ success: true });
+          }
+        }, 500);
+      });
+    }
+    
+    // Real backend call
+    if (!GAS_CONFIG.API_URL) {
+      throw new Error('API_URL not configured');
+    }
+    
+    try {
+      const result = await ApiService.retry(async () => {
+        return await ApiService.request(`${GAS_CONFIG.API_URL}?path=verify_otp`, {
+          method: 'POST',
+          body: JSON.stringify({ email, otp: code })
+        });
+      });
+      
+      // Map backend errors to user messages
+      if (!result.success && result.error) {
+        result.message = this._mapErrorMessage(result.error);
+      }
+      
+      return result;
+      
+    } catch (error) {
+      console.error('verifyOTP error:', error);
+      return {
+        success: false,
+        error: 'network_error',
+        message: this._getErrorMessage(error)
+      };
+    }
+  },
+  
+  /**
+   * Map backend error codes to Italian messages
+   * @param {string} errorCode - Backend error code
+   * @returns {string} User-friendly message
+   * @private
+   */
+  _mapErrorMessage(errorCode) {
+    const errorMessages = {
+      'invalid_otp': 'Codice non valido',
+      'otp_expired': 'Il codice è scaduto. Richiedine uno nuovo.',
+      'otp_already_used': 'Questo codice è già stato utilizzato',
+      'rate_limit': 'Troppi tentativi. Riprova tra 1 minuto.',
+      'invalid_email': 'Formato email non valido',
+      'missing_email': 'Email richiesta',
+      'missing_parameters': 'Parametri mancanti',
+      'server_error': 'Errore del server. Riprova più tardi.',
+      'email_quota_exceeded': 'Limite giornaliero email raggiunto. Riprova domani.',
+      'verification_failed': 'Verifica fallita. Riprova.'
+    };
+    
+    return errorMessages[errorCode] || 'Errore sconosciuto';
+  },
+  
+  /**
+   * Get user-friendly error message from exception
+   * @param {Error} error - Error object
+   * @returns {string} User message
+   * @private
+   */
+  _getErrorMessage(error) {
+    if (error.message.includes('timeout')) {
+      return 'Il server non risponde. Riprova.';
+    }
+    if (error.message.includes('internet')) {
+      return 'Nessuna connessione internet';
+    }
+    if (error.message.includes('404')) {
+      return 'Servizio non disponibile';
+    }
+    return 'Errore di connessione. Riprova.';
   }
 };
 
 // Export globally
 window.AuthService = AuthService;
-
-  /////////////////
-  // Task Service //
-  /////////////////
-
-
-    // Creates a new task and attaches it to the pending task list.
-
-
-    // Modifies the inner data and current view of an existing task.
-
-
-    // Deletes a task item and its listeners.
-
-
-
-  /////////////////////
-  // Category Service //
-  ////////////////////
-
-
-    // Creates a new category and attaches it to the custom category list.
-
-      // Adds filtering functionality to this category item.
-
-      // Attach the new category to the corresponding list.
-
-    // On task creation/update, updates the category list adding new categories if needed.
-
-
-    // On task deletion/update, updates the category list removing categories without tasks if needed.
- 
-
-    // Deletes a category item and its listeners.
-
-
-    // Adds filtering functionality to a category item.
-
-
-    // Transforms a category name into a valid id.
-
-  
-
-  //////////////////////
-  // Animation Service //
-  /////////////////////
-
-
-    // Swipe animation for task completion.
-
-
-    // Remove animation for task deletion.
-
-    
-  
-
-
-
+window.ApiService = ApiService;

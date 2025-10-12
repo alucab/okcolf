@@ -23,21 +23,21 @@
 
 ## Tasks
 
-- [ ] 1.0 Google Apps Script Backend Implementation
-  - [ ] 1.1 Create project structure in `server/gas/` with Code.gs, OTPService.gs, SheetService.gs, Utils.gs, and appsscript.json
-  - [ ] 1.2 Implement `doPost(e)` entry point in Code.gs with JSON parsing, path-based routing (/send_otp, /verify_otp), and error handling
-  - [ ] 1.3 Implement `sendOtp(email)` function in OTPService.gs: generate 6-digit random OTP, calculate expiration (+5 min), store in otp_log sheet, send email via GmailApp with Italian template
-  - [ ] 1.4 Implement `verifyOtp(email, otp)` function in OTPService.gs: search otp_log for matching record, validate expiration and verification status, update contacts sheet on success, return appropriate JSON responses
-  - [ ] 1.5 Create CORS utility functions in Utils.gs: setCorsHeaders() supporting okcolf.it, alucab.github.io, and localhost:5173, handle OPTIONS preflight requests
-  - [ ] 1.6 Implement SheetService.gs data access layer: getOrCreateSpreadsheet(), addOtpLog(), findOtpRecord(), updateOtpVerified(), addOrUpdateContact(), with error handling and logging
-  - [ ] 1.7 Create cleanupExpiredOtps() function in OTPService.gs to delete expired OTP records older than 24 hours while preserving email history
-  - [ ] 1.8 Add comprehensive logging throughout all functions for debugging and audit trails
+- [x] 1.0 Google Apps Script Backend Implementation
+  - [x] 1.1 Create project structure in `server/gas/` with Code.gs, OTPService.gs, SheetService.gs, Utils.gs, and appsscript.json
+  - [x] 1.2 Implement `doPost(e)` entry point in Code.gs with JSON parsing, path-based routing (/send_otp, /verify_otp), and error handling
+  - [X] 1.3 Implement `sendOtp(email)` function in OTPService.gs: generate 6-digit random OTP, calculate expiration (+5 min), store in otp_log sheet, send email via GmailApp with Italian template
+  - [X] 1.4 Implement `verifyOtp(email, otp)` function in OTPService.gs: search otp_log for matching record, validate expiration and verification status, update contacts sheet on success, return appropriate JSON responses
+  - [x] 1.5 Create CORS utility functions in Utils.gs: setCorsHeaders() supporting okcolf.it, alucab.github.io, and localhost:5173, handle OPTIONS preflight requests
+  - [X] 1.6 Implement SheetService.gs data access layer: getOrCreateSpreadsheet(), addOtpLog(), findOtpRecord(), updateOtpVerified(), addOrUpdateContact(), with error handling and logging
+  - [X] 1.7 Create cleanupExpiredOtps() function in OTPService.gs to delete expired OTP records older than 24 hours while preserving email history
+  - [X] 1.8 Add comprehensive logging throughout all functions for debugging and audit trails
 
 - [ ] 2.0 Google Sheets Database Setup
-  - [ ] 2.1 Create SHEETS_SCHEMA.md documentation with complete field definitions for otp_log (email, otp, created_at, expires_at, verified, ip) and contacts (email, verified, verified_at, source, meta) sheets
-  - [ ] 2.2 Implement getOrCreateSpreadsheet() in SheetService.gs to automatically create "OKColf_Contacts" spreadsheet if missing, with proper sheet initialization
-  - [ ] 2.3 Add createSheetHeaders() function to set up column headers and apply data validation rules (email format, boolean fields, datetime formatting)
-  - [ ] 2.4 Implement sheet existence verification on first script execution with email notification to script owner if sheets were auto-created
+  - [X] 2.1 Create SHEETS_SCHEMA.md documentation with complete field definitions for otp_log (email, otp, created_at, expires_at, verified, ip) and contacts (email, verified, verified_at, source, meta) sheets
+  - [X] 2.2 Implement getOrCreateSpreadsheet() in SheetService.gs to automatically create "OKColf_Contacts" spreadsheet if missing, with proper sheet initialization
+  - [X] 2.3 Add createSheetHeaders() function to set up column headers and apply data validation rules (email format, boolean fields, datetime formatting)
+  - [X] 2.4 Implement sheet existence verification on first script execution with email notification to script owner if sheets were auto-created
   - [ ] 2.5 Add data validation and formatting rules: email regex pattern, datetime formatting for timestamps, boolean validation for verified fields
   - [ ] 2.6 Create sample data insertion function for development/testing purposes with realistic test records
 

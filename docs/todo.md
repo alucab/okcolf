@@ -25,6 +25,8 @@
 - generare tutte le icone come da how-to-create-icons.md
 - rivedere design e scritte della pagina splash
 - rivedere designa colori delle input boxes della splash
+- Rivedere welcome per fare privacy che appare solo su click ora è brutta
+- complete privacy notice
 
 ## JS files
 
@@ -44,3 +46,4 @@
 - harfdening del GAS
 - salvare nome del utente
 - question> come evitare che ci sblocchino l-applicazione da javascript
+
