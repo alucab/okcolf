@@ -4,34 +4,40 @@
 
 ### UC0 Welcome e salvataggio email
 
-* [ ] UC0.1 - Welcome e OTP base
-* [ ] UC0.2 – Privacy Mgmt per GDPR
-* [ ] UC0.3 - Usodi un servizio serio per otp e mailing
+|F|Def|OK |Code |Titolo|
+|-|---|---|-----|---|
+|1|[x]|[x]|UC0.1|Registration / First Access with GAS|
+|2|[x]|[ ]|UC0.2|Privacy Mgmt GDPR|
+|2|[ ]|[ ]|UC0.3|Servizio serio OTP & Mailing|
 
 ### UC1 – Onboarding e prima configurazione
 
-* [ ] UC1.1 – Onboarding rapido collaboratore
-* [ ] UC1.2 – Configurazione Datore (opzionale)
+|F|Def|OK |Code |Titolo|
+|-|---|---|-----|---|
+|1|[x]|[ ]|UC1.1|Onboarding rapido collaboratore|
+|1|[ ]|[ ]|UC1.2|Configurazione Datore (opzionale)|
 
 ### UC2 – Tracking & Reporting
-
-* [ ] UC2.2 – Tracking ore giornaliere / settimanali
-* [ ] UC2.3 – Schermata simulazione costi
-* [ ] UC2.5 – Reminder trimestrale simulato
+|F|Def|OK |Code |Titolo|
+|-|---|---|-----|---|
+|1|[x]|[ ]|UC2.2|Tracking ore giornaliere / settimanali|
+|1|[x]|[ ]|UC2.3|Schermata simulazione costi|
+|1|[x]|[ ]|UC2.5|Reminder trimestrale simulato|
 
 ### UC6 Settings
-
-* [ ] UC6.1 Suggerisci nuova funzione
-* [ ] UC6.2 Inserimento email da Settings
-* [ ] UC6.3 Reset dei Dati
-* [ ] UC6.4 – Export / Backup dati
+|F|Def|OK |Code |Titolo|
+|-|---|---|-----|---|
+|1|[x]|[ ]|UC6.1|Suggerisci nuova funzione|
+|1|[ ]|[ ]|UC6.2|Inserimento email da Settings|
+|?|[ ]|[ ]|UC6.3|Reset dei Dati|
+|?|[x]|[ ]|UC6.4|Export / Backup dati|
 
 ### UC7 Use case tecnici Vari
-
-* [ ] UC7.2 Update dell'applicazione senza cambia allo schema
-* [ ] UC7.3 Update del DB schema e migrazione
-* [ ] UC7.4 Sincronizzazione Dati
-* [ ] UC7.5 Analytics MVP
+|F|Def|OK |Code |Titolo|
+|-|---|---|-----|---|
+|1|[ ]|[ ]|UC7.1|Update dell'applicazione senza cambia allo schema|
+|1|[ ]|[ ]|UC7.2|Update del DB schema e migrazione|
+|1|[ ]|[ ]|UC7.3|Analytics MVP|
 
 ---
 
