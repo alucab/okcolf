@@ -41,21 +41,28 @@ window.Tests = {
     async testOTPSend() {
       const result = await AuthService.sendOTP('test@example.com');
       console.assert(result.success === true, '❌ OTP send should succeed');
-      console.assert(result.code === '123456', '❌ Mock code should be 123456');
-      console.log('✅ 6.1.2: Mock OTP sends correctly');
+      if (GAS_CONFIG.USE_MOCK) {
+        console.log('✅ 6.1.2: Mock OTP sends correctly');
+      } else {
+        console.log('✅ 6.1.2: Real OTP sent (check email)');
+      }
     },
 
     async testOTPVerify() {
-      let result = await AuthService.verifyOTP('test@example.com', '123456');
-      console.assert(result.success === true, '❌ Valid OTP should succeed');
-      
-      result = await AuthService.verifyOTP('test@example.com', '12345');
-      console.assert(result.success === false, '❌ 5-digit code should fail');
-      
-      result = await AuthService.verifyOTP('test@example.com', 'abcdef');
-      console.assert(result.success === false, '❌ Non-numeric should fail');
-      
-      console.log('✅ 6.6: OTP validation works');
+      if (GAS_CONFIG.USE_MOCK) {
+        let result = await AuthService.verifyOTP('test@example.com', '123456');
+        console.assert(result.success === true, '❌ Valid OTP should succeed');
+        
+        result = await AuthService.verifyOTP('test@example.com', '12345');
+        console.assert(result.success === false, '❌ 5-digit code should fail');
+        
+        result = await AuthService.verifyOTP('test@example.com', 'abcdef');
+        console.assert(result.success === false, '❌ Non-numeric should fail');
+        
+        console.log('✅ 6.6: OTP validation works (mock mode)');
+      } else {
+        console.log('⚠️ Real backend mode - use manual test for OTP verification');
+      }
     },
 
     async runAll() {
@@ -69,6 +76,83 @@ window.Tests = {
         console.log('✅ All welcome page tests passed!\n');
       } catch (err) {
         console.error('❌ Test failed:', err);
+      }
+    }
+  },
+
+  // Backend Integration Tests
+  Backend: {
+    async testAPIConnection() {
+      if (GAS_CONFIG.USE_MOCK) {
+        console.log('⚠️ Mock mode enabled - skipping real API test');
+        return true;
+      }
+      
+      if (!GAS_CONFIG.API_URL) {
+        console.error('❌ API_URL not configured');
+        return false;
+      }
+      
+      try {
+        const result = await ApiService.request(`${GAS_CONFIG.API_URL}?path=health`, {
+          method: 'POST',
+          body: JSON.stringify({})
+        });
+        
+        console.assert(result.success === true, '❌ Health check failed');
+        console.log('✅ Backend API reachable:', result);
+        return true;
+      } catch (error) {
+        console.error('❌ Backend connection failed:', error.message);
+        return false;
+      }
+    },
+
+    async testRealOTPFlow() {
+      if (GAS_CONFIG.USE_MOCK) {
+        console.log('⚠️ Mock mode - use testFullOTPFlow() for real test');
+        return;
+      }
+      
+      const testEmail = prompt('Enter test email for OTP:');
+      if (!testEmail) return;
+      
+      console.log('📧 Sending OTP to', testEmail);
+      const sendResult = await AuthService.sendOTP(testEmail);
+      console.log('Send result:', sendResult);
+      
+      if (sendResult.success) {
+        const otp = prompt('Enter OTP from email:');
+        if (otp) {
+          console.log('🔐 Verifying OTP...');
+          const verifyResult = await AuthService.verifyOTP(testEmail, otp);
+          console.log('Verify result:', verifyResult);
+        }
+      }
+    },
+
+    async testErrorHandling() {
+      console.log('Testing error scenarios...');
+      
+      // Invalid email
+      let result = await AuthService.sendOTP('invalid-email');
+      console.log('Invalid email:', result);
+      
+      // Invalid OTP format
+      result = await AuthService.verifyOTP('test@example.com', '12345');
+      console.log('Invalid OTP format:', result);
+      
+      console.log('✅ Error handling test complete');
+    },
+
+    async runAll() {
+      console.log('🌐 Backend Tests...\n');
+      try {
+        await this.testAPIConnection();
+        await this.testErrorHandling();
+        console.log('✅ Backend tests complete!\n');
+      } catch (err) {
+        console.error('❌ Backend test failed:', err);
       }
     }
   },
@@ -121,7 +205,7 @@ window.Tests = {
     },
 
     async runAll() {
-      console.log('🌐 Connectivity Tests...\n');
+      console.log('🌍 Connectivity Tests...\n');
       try {
         await this.testOnlineDetection();
         await this.testAppStateSync();
@@ -137,63 +221,56 @@ window.Tests = {
   // Manual Test Procedures
   Manual: {
     procedures: {
-      'welcome.1': {
-        name: 'First-time user email registration',
+      'welcome.real.1': {
+        name: 'Real OTP Flow (Production Test)',
         steps: [
-          '1. Run: await Tests.cmd.reset()',
-          '2. Verify welcome page appears',
-          '3. Enter name and email',
-          '4. Click "Invia Codice"',
-          '5. Verify OTP field appears',
-          '6. Console shows mock OTP: 123456',
-          '7. Enter 123456, click "Conferma"',
-          '8. Verify redirect to home',
-          '9. Run: await Tests.cmd.check()',
-          '10. Verify session: mode="email", verified=true'
+          '1. Set GAS_CONFIG.USE_MOCK = false',
+          '2. Set GAS_CONFIG.API_URL to your deployed URL',
+          '3. Run: await Tests.cmd.reset()',
+          '4. Enter real email',
+          '5. Click "Invia Codice"',
+          '6. Check email inbox for OTP',
+          '7. Enter received OTP',
+          '8. Click "Conferma"',
+          '9. Verify redirect to home',
+          '10. Run: await Tests.cmd.check()'
         ],
         handler: async () => {
+          if (GAS_CONFIG.USE_MOCK) {
+            console.warn('⚠️ Still in mock mode. Set GAS_CONFIG.USE_MOCK = false');
+          }
           await KV.clear();
           location.reload();
         }
       },
 
-      'welcome.2': {
-        name: 'Anonymous mode',
+      'backend.deploy.1': {
+        name: 'Verify Backend Deployment',
         steps: [
-          '1. Run: await Tests.cmd.reset()',
-          '2. Click "Continua senza email"',
-          '3. Verify toast: "Modalità offline attivata"',
-          '4. Verify redirect to home',
-          '5. Run: await Tests.cmd.check()',
-          '6. Verify session: mode="anon"'
+          '1. Deploy Google Apps Script as Web App',
+          '2. Copy deployment URL',
+          '3. Update GAS_CONFIG.API_URL in conf.js',
+          '4. Run: await Tests.Backend.testAPIConnection()',
+          '5. Should see "Backend API reachable"',
+          '6. Run: await Tests.Backend.testRealOTPFlow()',
+          '7. Verify email delivery and OTP verification'
         ],
         handler: async () => {
-          await KV.clear();
-          location.reload();
+          console.log('Deployment URL:', GAS_CONFIG.API_URL || 'NOT SET');
+          console.log('Mock mode:', GAS_CONFIG.USE_MOCK);
         }
       },
 
-      'welcome.3': {
-        name: 'Returning user',
+      'privacy.1': {
+        name: 'Privacy Notice Validation',
         steps: [
-          '1. Run: await Tests.cmd.returning()',
-          '2. Verify direct load to home',
-          '3. No welcome page shown',
-          '4. Menu footer shows email/offline'
-        ],
-        handler: async () => {
-          await AuthService.saveSession('email', 'returning@test.com', true);
-          location.reload();
-        }
-      },
-
-      'welcome.4': {
-        name: 'Email validation',
-        steps: [
-          '1. Run: await Tests.cmd.welcome()',
-          '2. Empty email → button disabled',
-          '3. Invalid email → shows error',
-          '4. Valid email → button enabled'
+          '1. Open welcome page',
+          '2. Verify privacy text visible',
+          '3. Verify checkbox present',
+          '4. Try to submit without checking box',
+          '5. Should show error',
+          '6. Check box and submit',
+          '7. Should proceed normally'
         ],
         handler: async () => {
           await KV.clear();
@@ -201,81 +278,7 @@ window.Tests = {
         }
       },
 
-      'welcome.5': {
-        name: 'OTP validation',
-        steps: [
-          '1. Complete email step',
-          '2. Enter 5 digits → error',
-          '3. Enter letters → error',
-          '4. Enter 123456 → success'
-        ],
-        handler: async () => {
-          await KV.clear();
-          document.querySelector('#myNavigator').resetToPage('html/welcome.html');
-        }
-      },
-
-      'welcome.6': {
-        name: 'Loading states',
-        steps: [
-          '1. Enter email, click button',
-          '2. Button shows "Invio..." (1s)',
-          '3. Enter OTP, click button',
-          '4. Button shows "Verifica..." (0.5s)'
-        ],
-        handler: async () => {
-          await KV.clear();
-          document.querySelector('#myNavigator').resetToPage('html/welcome.html');
-        }
-      },
-
-      'welcome.7': {
-        name: 'Back button',
-        steps: [
-          '1. Complete email step',
-          '2. Click "← Torna indietro"',
-          '3. Verify return to step 1',
-          '4. Email preserved, OTP cleared'
-        ],
-        handler: async () => {
-          await KV.clear();
-          document.querySelector('#myNavigator').resetToPage('html/welcome.html');
-        }
-      },
-
-      'connectivity.1': {
-        name: 'Offline registration',
-        steps: [
-          '1. Run: await Tests.cmd.welcome()',
-          '2. DevTools → Network → Offline',
-          '3. Complete registration',
-          '4. Verify mock OTP works',
-          '5. Session saved to Dexie',
-          '6. Footer shows offline icon'
-        ],
-        handler: async () => {
-          await KV.clear();
-          document.querySelector('#myNavigator').resetToPage('html/welcome.html');
-        }
-      },
-
-      'connectivity.2': {
-        name: 'Full offline mode',
-        steps: [
-          '1. Complete registration online',
-          '2. Reload app',
-          '3. DevTools → Network → Offline',
-          '4. Reload again',
-          '5. App loads from Service Worker',
-          '6. Navigation works',
-          '7. Add worker → saved to Dexie',
-          '8. Footer shows offline icon',
-          '9. Go online → icon updates'
-        ],
-        handler: async () => {
-          console.log('Manual procedure - use DevTools');
-        }
-      }
+      ...Tests.WelcomePage.procedures || {}
     },
 
     run(testId) {
@@ -299,7 +302,7 @@ window.Tests = {
         console.error(`❌ Test ${testId} not found`);
         return;
       }
-      console.log(`▶️  ${test.name}`);
+      console.log(`▶️ ${test.name}`);
       await test.handler();
     },
 
@@ -308,7 +311,7 @@ window.Tests = {
       Object.entries(this.procedures).forEach(([id, t]) => {
         console.log(`${id}: ${t.name}`);
       });
-      console.log('\nUsage: Tests.Manual.run("welcome.1")\n');
+      console.log('\nUsage: Tests.Manual.run("welcome.real.1")\n');
     }
   },
 
@@ -317,6 +320,7 @@ window.Tests = {
     async all() {
       await Tests.WelcomePage.runAll();
       await Tests.Connectivity.runAll();
+      await Tests.Backend.runAll();
     },
     
     async reset() {
@@ -329,24 +333,11 @@ window.Tests = {
       document.querySelector('#myNavigator').resetToPage('html/welcome.html');
     },
     
-    async returning() {
-      await AuthService.saveSession('email', 'user@test.com', true);
-      location.reload();
-    },
-    
-    async returningAnon() {
-      await AuthService.saveSession('anon', '', false);
-      location.reload();
-    },
-    
     async check() {
       const session = await AuthService.checkSession();
       console.log('Current session:', session);
-    },
-    
-    async kv() {
-      const all = await db.kv.toArray();
-      console.table(all);
+      console.log('Mock mode:', GAS_CONFIG.USE_MOCK);
+      console.log('API URL:', GAS_CONFIG.API_URL || 'NOT SET');
     }
   }
 };
