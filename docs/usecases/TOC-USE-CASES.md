@@ -18,6 +18,7 @@
 |1|[ ]|[ ]|UC1.2|Configurazione Datore (opzionale)|
 
 ### UC2 – Tracking & Reporting
+
 |F|Def|OK |Code |Titolo|
 |-|---|---|-----|---|
 |1|[x]|[ ]|UC2.2|Tracking ore giornaliere / settimanali|
@@ -25,6 +26,7 @@
 |1|[x]|[ ]|UC2.5|Reminder trimestrale simulato|
 
 ### UC6 Settings
+
 |F|Def|OK |Code |Titolo|
 |-|---|---|-----|---|
 |1|[x]|[ ]|UC6.1|Suggerisci nuova funzione|
@@ -33,11 +35,12 @@
 |?|[x]|[ ]|UC6.4|Export / Backup dati|
 
 ### UC7 Use case tecnici Vari
+
 |F|Def|OK |Code |Titolo|
 |-|---|---|-----|---|
 |1|[ ]|[ ]|UC7.1|Update dell'applicazione senza cambia allo schema|
 |1|[ ]|[ ]|UC7.2|Update del DB schema e migrazione|
-|1|[ ]|[ ]|UC7.3|Analytics MVP|
+|1|[ ]|[ ]|UC7.3|Google Analytics MVP|
 
 ---
 
